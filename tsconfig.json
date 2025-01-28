@@ -1,0 +1,14 @@
+{
+	"angularCompilerOptions": {
+		"enableI18nLegacyMessageIdFormat": false,
+		"strictInjectionParameters": true,
+		"strictInputAccessModifiers": true,
+		"strictTemplates": true,
+	},
+	"compilerOptions": {
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"target": "esnext",
+	},
+}

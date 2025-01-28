@@ -1,0 +1,17 @@
+<div class="main">
+	<form class="box">
+		<div class="inputs">
+			<input [(ngModel)]="username" name="username" placeholder="Username">
+			<input [(ngModel)]="password" name="password" placeholder="Password" type="password">
+
+			<label for="remember">
+				<input id="remember" name="remember" [(ngModel)]="remember" type="checkbox">
+				<span>Remember login on this device</span>
+			</label>
+		</div>
+		<div class="buttons">
+			<button (click)="login()" name="login" type="submit" formaction="/test">Login</button>
+			<button (click)="register()" name="register">Register</button>
+		</div>
+	</form>
+</div>

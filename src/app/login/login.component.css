@@ -1,0 +1,45 @@
+.box {
+	background-color: #aaa;
+	border-radius: 50px;
+	height: 80%;
+	justify-content: space-evenly;
+	width: 50%;
+}
+
+.buttons {
+	height: 20%;
+	justify-content: space-around;
+}
+
+.inputs {
+	height: 30%;
+	justify-content: space-around;
+}
+
+.main {
+	display: flex;
+	height: 100%;
+	justify-content: space-evenly;
+	width: 100%;
+}
+
+button {
+	border: 2px solid #333;
+	border-radius: 10px;
+	padding: 10px;
+	width: 20vw;
+}
+
+div,
+form {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+input:not([type="checkbox"]) {
+	border: 1px solid #333;
+	border-radius: 10px;
+	padding: 10px;
+	width: 20vw;
+}

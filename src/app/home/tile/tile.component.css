@@ -1,0 +1,21 @@
+a {
+	background: linear-gradient(300deg, transparent, white 30%), url(/tile.webp);
+	background-size: cover;
+	border: 2px solid #333;
+	border-radius: 20px;
+	color: #333;
+	display: flex;
+	font-size: 24px;
+	font-weight: bold;
+	height: 20vh;
+	text-decoration: none;
+	width: 25vw;
+}
+
+a:hover {
+	transform: translatey(5px);
+}
+
+span {
+	margin: 20px;
+}
