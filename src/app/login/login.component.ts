@@ -1,5 +1,7 @@
-import { Component, Input } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+import { HttpService } from "../../http/http.service";
 
 @Component({
 	imports: [FormsModule],
@@ -8,29 +10,48 @@ import { FormsModule } from "@angular/forms";
 	templateUrl: "./login.component.html",
 })
 export class LoginComponent {
+	http: HttpService;
+	router: Router;
+
 	password = "";
 	remember = false;
 	username = "";
 
-	login() {
-		this.verify();
+	constructor(http: HttpService, router: Router) {
+		this.http = http;
+		this.router = router;
 	}
 
-	register() {
-		this.verify();
+	async login() {
+		try {
+			const response = await this.http.authorizeUser(this.username, this.password);
+
+			if ("message" in response) {
+				alert(`Error: ${response.message}`);
+				return;
+			}
+
+			alert("Login successful");
+
+			this.http.setToken(response.data.token, this.remember);
+			this.router.navigateByUrl("");
+		} catch {
+			alert("Connection error");
+		}
 	}
 
-	verify() {
-		if (!/^[a-zA-Z]{3,}$/.test(this.username)) {
-			alert("Invalid username!");
-			return;
-		}
+	async register() {
+		try {
+			const response = await this.http.createUser(this.username, this.password);
 
-		if (!/^[a-zA-Z0-9]{8,}$/.test(this.password)) {
-			alert("Invalid password!");
-			return;
-		}
+			if ("message" in response) {
+				alert(`Error: ${response.message}`);
+				return;
+			}
 
-		alert(`Valid: ${this.username}, ${this.password}, ${this.remember}`);
+			this.login();
+		} catch {
+			alert("Connection error");
+		}
 	}
 }

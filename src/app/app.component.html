@@ -5,7 +5,12 @@
 	</a>
 
 	<nav>
+		@if (this.http.loggedIn) {
+		<a routerLink="profile">Profile</a>
+		<a routerLink="logout">Logout</a>
+		} @else {
 		<a routerLink="login">Login</a>
+		}
 		<a href="https://github.com/racele">
 			<img class="external" src="github.png">
 		</a>
