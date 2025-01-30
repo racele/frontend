@@ -1,13 +1,36 @@
-import { Component, Input } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component, Input, booleanAttribute } from "@angular/core";
+import { Router } from "@angular/router";
+import { HttpService } from "../../../http/http.service";
 
 @Component({
-	imports: [RouterLink],
 	selector: "app-tile",
 	styleUrl: "./tile.component.css",
 	templateUrl: "./tile.component.html",
 })
 export class TileComponent {
+	http: HttpService;
+	router: Router;
+
+	@Input({ transform: booleanAttribute })
+	loginOnly = false;
+
 	@Input()
-	link = "";
+	route = "";
+
+	constructor(http: HttpService, router: Router) {
+		this.http = http;
+		this.router = router;
+	}
+
+	get active(): boolean {
+		return this.http.loggedIn || !this.loginOnly;
+	}
+
+	check(): void {
+		if (this.active) {
+			this.router.navigateByUrl(this.route);
+		} else {
+			alert("Login required!");
+		}
+	}
 }

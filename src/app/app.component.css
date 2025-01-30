@@ -1,13 +1,17 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
 .external {
-	height: 20px;
-	width: 20px;
+	height: 18px;
 }
 
 .icon {
 	border-radius: 50%;
 	height: 40px;
 	margin: 10px;
-	width: 40px;
 }
 
 a {
@@ -31,14 +35,13 @@ h1 {
 header {
 	background-color: #333;
 	display: flex;
-	height: 60px;
 	justify-content: space-between;
 }
 
 main {
 	background-color: #ccc;
 	color: #333;
-	height: calc(100% - 60px);
+	flex-grow: 1;
 }
 
 nav {

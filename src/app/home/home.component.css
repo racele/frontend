@@ -9,12 +9,14 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
+	height: 30%;
 }
 
 .row {
 	display: flex;
+	flex-grow: 1;
 	justify-content: space-evenly;
-	width: 90%;
+	width: 100%;
 }
 
 h2 {
