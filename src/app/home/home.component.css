@@ -1,4 +1,4 @@
-.main {
+:host {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -15,8 +15,8 @@
 .row {
 	display: flex;
 	flex-grow: 1;
-	justify-content: space-evenly;
-	width: 90%;
+	justify-content: space-between;
+	width: 80%;
 }
 
 h2 {

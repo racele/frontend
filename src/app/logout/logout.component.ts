@@ -17,14 +17,14 @@ export class LogoutComponent {
 	}
 
 	cancel() {
-		alert("Logout cancelled");
+		alert("Logout cancelled!");
 		this.router.navigateByUrl("");
 	}
 
 	confirm() {
 		this.http.removeToken();
 
-		alert("Logout successful");
+		alert("Logout successful!");
 		this.router.navigateByUrl("");
 	}
 }

@@ -26,7 +26,7 @@ export class TileComponent {
 		return this.http.loggedIn || !this.loginOnly;
 	}
 
-	check(): void {
+	onclick(): void {
 		if (this.active) {
 			this.router.navigateByUrl(this.route);
 		} else {

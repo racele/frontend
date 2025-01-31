@@ -5,7 +5,7 @@
 	</a>
 
 	<nav>
-		@if (this.http.loggedIn) {
+		@if (http.loggedIn) {
 		<a routerLink="profile">Profile</a>
 		<a routerLink="logout">Logout</a>
 		} @else {

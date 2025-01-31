@@ -1,10 +1,11 @@
 * {
+	color: inherit;
+	font-family: sans-serif;
 	margin: 0;
 	padding: 0;
 }
 
 body {
-	font-family: sans-serif;
 	height: 100%;
 }
 

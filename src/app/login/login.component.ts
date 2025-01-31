@@ -31,12 +31,12 @@ export class LoginComponent {
 				return;
 			}
 
-			alert("Login successful");
+			alert("Login successful!");
 
 			this.http.setToken(response.data.token, this.remember);
 			this.router.navigateByUrl("");
 		} catch {
-			alert("Connection error");
+			alert("Connection error!");
 		}
 	}
 
@@ -51,7 +51,7 @@ export class LoginComponent {
 
 			this.login();
 		} catch {
-			alert("Connection error");
+			alert("Connection error!");
 		}
 	}
 }
