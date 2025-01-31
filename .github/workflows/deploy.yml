@@ -19,7 +19,7 @@ jobs:
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: racele/racele.github.io
+          REPO: git@github.com:racele/racele.github.io
           BRANCH: main
           FOLDER: build/browser
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
