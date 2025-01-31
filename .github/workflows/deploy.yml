@@ -23,4 +23,4 @@ jobs:
           BRANCH: main
           FOLDER: build/browser
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
-          MESSAGE: "{msg} ({sha})"
+          MESSAGE: "{msg} (frontend@{sha})"

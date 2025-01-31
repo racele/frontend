@@ -8,17 +8,21 @@ export const routes: Routes = [
 	{
 		component: HomeComponent,
 		path: "",
+		title: "Racele",
 	},
 	{
 		component: LoginComponent,
 		path: "login",
+		title: "Login",
 	},
 	{
 		component: LogoutComponent,
 		path: "logout",
+		title: "Logout",
 	},
 	{
 		component: WipComponent,
 		path: "**",
+		title: "Under Construction",
 	},
 ];
