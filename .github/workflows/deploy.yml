@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: s0/git-publish-subdir-action
+        env:
+          REPO: racele/racele.github.io
+          BRANCH: main
+          FOLDER: build/browser
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          MESSAGE: "{msg} ({sha})"
