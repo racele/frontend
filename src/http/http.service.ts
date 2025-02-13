@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "./http.client";
-import { Auth, HttpResponse, User } from "./http.types";
+import { Auth, HttpResponse, User, Words } from "./http.types";
 
 @Injectable({
 	providedIn: "root",
@@ -22,6 +22,10 @@ export class HttpService {
 
 	createUser(username: string, password: string): HttpResponse<User> {
 		return this.client.post("users", { password, username });
+	}
+
+	getWords(): HttpResponse<Words> {
+		return this.client.get("words", { language: "en" });
 	}
 
 	removeToken(): void {

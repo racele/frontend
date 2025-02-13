@@ -26,3 +26,8 @@ export interface User {
 	id: number;
 	username: string;
 }
+
+export interface Words {
+	guessable: string[];
+	solutions: string[];
+}
