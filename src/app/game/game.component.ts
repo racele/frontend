@@ -3,21 +3,24 @@ import {
 	Component,
 	ElementRef,
 	HostListener,
+	OnInit,
 	QueryList,
 	ViewChild,
 	ViewChildren,
 } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { WordService } from "../../words/words.service";
 import { Mode, Result } from "../../words/words.types";
 import { WordComponent } from "./word/word.component";
 
 @Component({
 	imports: [WordComponent],
-	selector: "app-practice",
-	styleUrl: "./practice.component.css",
-	templateUrl: "./practice.component.html",
+	selector: "app-game",
+	styleUrl: "./game.component.css",
+	templateUrl: "./game.component.html",
 })
-export class PracticeComponent implements AfterViewInit {
+export class GameComponent implements AfterViewInit, OnInit {
+	route: ActivatedRoute;
 	words: WordService;
 
 	@ViewChild("button")
@@ -29,9 +32,13 @@ export class PracticeComponent implements AfterViewInit {
 	@ViewChild("info")
 	info!: ElementRef<HTMLSpanElement>;
 
-	constructor(words: WordService) {
+	constructor(route: ActivatedRoute, words: WordService) {
+		this.route = route;
 		this.words = words;
-		this.words.mode = Mode.Practice;
+	}
+
+	get practice(): boolean {
+		return this.words.mode === Mode.Practice;
 	}
 
 	async ngAfterViewInit(): Promise<void> {
@@ -46,6 +53,14 @@ export class PracticeComponent implements AfterViewInit {
 		if (this.words.progress === null) {
 			this.words.reset();
 		}
+
+		this.updateWords();
+	}
+
+	ngOnInit(): void {
+		this.route.data.subscribe((data) => {
+			this.words.mode = data.mode;
+		});
 	}
 
 	@HostListener("window:keydown", ["$event"])
@@ -56,7 +71,7 @@ export class PracticeComponent implements AfterViewInit {
 			this.words.addLetter(key);
 		} else if (key === "backspace") {
 			this.words.removeLetter();
-		} else if (key === "delete") {
+		} else if (key === "delete" && this.practice) {
 			this.words.reset();
 		} else if (key === "enter") {
 			this.words.enterGuess();
@@ -85,10 +100,16 @@ export class PracticeComponent implements AfterViewInit {
 
 		if (progress.guesses.length > 1) {
 			this.info.nativeElement.className = "hidden";
-			this.button.nativeElement.disabled = false;
+
+			if (this.practice) {
+				this.button.nativeElement.disabled = false;
+			}
 		} else {
 			this.info.nativeElement.className = "";
-			this.button.nativeElement.disabled = true;
+
+			if (this.practice) {
+				this.button.nativeElement.disabled = true;
+			}
 		}
 
 		for (const word of this.grid) {

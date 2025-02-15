@@ -2,6 +2,12 @@ export interface Auth {
 	token: string;
 }
 
+export interface Daily {
+	created_at: string;
+	language: string;
+	solution: string;
+}
+
 export interface ErrorResponse {
 	code: number;
 	message: string;

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "../http/http.service";
-import { Words } from "../http/http.types";
+import { Daily, Words } from "../http/http.types";
 import { Mode, Progress, Result } from "./words.types";
 
 @Injectable({
@@ -10,6 +10,7 @@ export class WordService {
 	http: HttpService;
 	mode = Mode.Unknown;
 
+	daily: Daily | null = null;
 	words: Words | null = null;
 
 	constructor(http: HttpService) {
@@ -61,6 +62,10 @@ export class WordService {
 	}
 
 	async load(): Promise<void> {
+		if (this.mode === Mode.Daily) {
+			await this.loadDaily();
+		}
+
 		if (this.words !== null) {
 			return;
 		}
@@ -72,6 +77,20 @@ export class WordService {
 		}
 
 		this.words = response.data;
+	}
+
+	async loadDaily(): Promise<void> {
+		const response = await this.http.getDaily();
+
+		if ("message" in response) {
+			return;
+		}
+
+		this.daily = response.data;
+
+		if (this.daily.solution !== this.progress?.solution) {
+			this.reset();
+		}
 	}
 
 	removeLetter(): void {
@@ -88,7 +107,9 @@ export class WordService {
 	reset(): void {
 		let solution: string;
 
-		if (this.mode === Mode.Practice && this.words !== null) {
+		if (this.mode === Mode.Daily && this.daily !== null) {
+			solution = this.daily.solution;
+		} else if (this.mode === Mode.Practice && this.words !== null) {
 			solution = this.words.solutions[Math.floor(Math.random() * this.words.solutions.length)];
 		} else {
 			return;

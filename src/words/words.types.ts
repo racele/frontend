@@ -1,4 +1,5 @@
 export enum Mode {
+	Daily = "daily",
 	Practice = "practice",
 	Unknown = "unknown",
 }
