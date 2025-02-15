@@ -1,8 +1,8 @@
 :host {
 	align-items: center;
 	display: flex;
-	height: 12%;
-	margin: 7px 0;
+	flex: 1;
+	margin: 2px;
 }
 
 .gray {
@@ -33,5 +33,5 @@ span {
 	font-weight: bold;
 	height: 100%;
 	justify-content: center;
-	margin: 0 2px;
+	margin: 2px;
 }

@@ -8,7 +8,7 @@ import {
 	ViewChildren,
 } from "@angular/core";
 import { WordService } from "../../words/words.service";
-import { Result } from "../../words/words.types";
+import { Mode, Result } from "../../words/words.types";
 import { WordComponent } from "./word/word.component";
 
 @Component({
@@ -31,7 +31,7 @@ export class PracticeComponent implements AfterViewInit {
 
 	constructor(words: WordService) {
 		this.words = words;
-		this.words.context = "practice";
+		this.words.mode = Mode.Practice;
 	}
 
 	async ngAfterViewInit(): Promise<void> {
@@ -40,7 +40,7 @@ export class PracticeComponent implements AfterViewInit {
 		try {
 			await this.words.load();
 		} catch {
-			alert("Could not fetch word list!");
+			alert("Could not load word list!");
 		}
 
 		if (this.words.progress === null) {
@@ -52,20 +52,19 @@ export class PracticeComponent implements AfterViewInit {
 	onkeydown(event: KeyboardEvent): void {
 		const key = event.key.toLowerCase();
 
-		if (/^[a-zA-Z]$/.test(key)) {
+		if (/^[a-z]$/.test(key)) {
 			this.words.addLetter(key);
 		} else if (key === "backspace") {
 			this.words.removeLetter();
 		} else if (key === "delete") {
-			this.reset();
+			this.words.reset();
 		} else if (key === "enter") {
 			this.words.enterGuess();
 
 			if (this.words.progress?.result === Result.Loss) {
-				const solution = this.words.progress.solution.toUpperCase();
-				setTimeout(alert, 0, `You lost! The solution was: ${solution}`);
+				setTimeout(alert, 0, `The solution was: ${this.words.progress.solution.toUpperCase()}`);
 			} else if (this.words.progress?.result === Result.Victory) {
-				setTimeout(alert, 0, "You won! Your time: 0:00.000");
+				setTimeout(alert, 0, "Your time: 0:00.000");
 			}
 		}
 
@@ -85,10 +84,10 @@ export class PracticeComponent implements AfterViewInit {
 		}
 
 		if (progress.guesses.length > 1) {
-			this.info.nativeElement.classList.add("hidden");
+			this.info.nativeElement.className = "hidden";
 			this.button.nativeElement.disabled = false;
 		} else {
-			this.info.nativeElement.classList.remove("hidden");
+			this.info.nativeElement.className = "";
 			this.button.nativeElement.disabled = true;
 		}
 

@@ -1,22 +1,23 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "../http/http.service";
 import { Words } from "../http/http.types";
-import { Progress, Result } from "./words.types";
+import { Mode, Progress, Result } from "./words.types";
 
 @Injectable({
 	providedIn: "root",
 })
 export class WordService {
-	cache: Words | null = null;
-	context = "unknown";
 	http: HttpService;
+	mode = Mode.Unknown;
+
+	words: Words | null = null;
 
 	constructor(http: HttpService) {
 		this.http = http;
 	}
 
 	get progress(): Progress | null {
-		const progress = localStorage.getItem(this.context);
+		const progress = localStorage.getItem(this.mode);
 
 		if (progress === null) {
 			return null;
@@ -32,22 +33,20 @@ export class WordService {
 			return;
 		}
 
-		if (progress.guesses[0].length < 5) {
-			progress.guesses[0] += letter;
-			this.setProgress(progress);
-		}
+		progress.guesses[0] = (progress.guesses[0] + letter).slice(0, 5);
+		this.setProgress(progress);
 	}
 
 	enterGuess(): void {
 		const progress = this.progress;
 
-		if (progress === null || this.cache === null) {
+		if (progress === null || this.words === null) {
 			return;
 		}
 
 		const guess = progress.guesses[0];
 
-		if (!this.cache.guessable.includes(guess) && !this.cache.solutions.includes(guess)) {
+		if (!this.words.guessable.includes(guess) && !this.words.solutions.includes(guess)) {
 			return;
 		}
 
@@ -62,7 +61,7 @@ export class WordService {
 	}
 
 	async load(): Promise<void> {
-		if (this.cache !== null) {
+		if (this.words !== null) {
 			return;
 		}
 
@@ -72,7 +71,7 @@ export class WordService {
 			return;
 		}
 
-		this.cache = response.data;
+		this.words = response.data;
 	}
 
 	removeLetter(): void {
@@ -87,17 +86,18 @@ export class WordService {
 	}
 
 	reset(): void {
-		if (this.cache === null) {
+		let solution: string;
+
+		if (this.mode === Mode.Practice && this.words !== null) {
+			solution = this.words.solutions[Math.floor(Math.random() * this.words.solutions.length)];
+		} else {
 			return;
 		}
-
-		const index = Math.floor(Math.random() * this.cache.solutions.length);
-		const solution = this.cache.solutions[index];
 
 		this.setProgress({ guesses: [""], result: Result.None, solution });
 	}
 
 	setProgress(progress: Progress): void {
-		localStorage.setItem(this.context, JSON.stringify(progress));
+		localStorage.setItem(this.mode, JSON.stringify(progress));
 	}
 }

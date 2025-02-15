@@ -1,3 +1,8 @@
+export enum Mode {
+	Practice = "practice",
+	Unknown = "unknown",
+}
+
 export interface Progress {
 	guesses: string[];
 	result: Result;
@@ -5,7 +10,7 @@ export interface Progress {
 }
 
 export enum Result {
-	Loss = 0,
-	None = 1,
-	Victory = 2,
+	Loss = "loss",
+	None = "none",
+	Victory = "victory",
 }

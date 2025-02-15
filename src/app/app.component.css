@@ -41,7 +41,7 @@ header {
 main {
 	background-color: #ccc;
 	color: #333;
-	flex-grow: 1;
+	flex: 1;
 }
 
 nav {

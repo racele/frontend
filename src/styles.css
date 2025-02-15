@@ -1,7 +1,11 @@
 * {
+	border: 0;
+	box-sizing: border-box;
 	color: inherit;
 	font-family: sans-serif;
 	margin: 0;
+	min-height: 0;
+	min-width: 0;
 	padding: 0;
 }
 

@@ -15,17 +15,16 @@ export class WordComponent {
 		for (const span of this.spans) {
 			const letter = guess[index] ?? "";
 
-			span.nativeElement.className = "";
 			span.nativeElement.innerHTML = letter.toUpperCase();
 
-			if (entered) {
-				if (letter === solution[index]) {
-					span.nativeElement.classList.add("green");
-				} else if (solution.includes(letter)) {
-					span.nativeElement.classList.add("yellow");
-				} else {
-					span.nativeElement.classList.add("gray");
-				}
+			if (!entered) {
+				span.nativeElement.className = "";
+			} else if (letter === solution[index]) {
+				span.nativeElement.className = "green";
+			} else if (solution.includes(letter)) {
+				span.nativeElement.className = "yellow";
+			} else {
+				span.nativeElement.className = "gray";
 			}
 
 			index++;

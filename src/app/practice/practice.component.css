@@ -14,14 +14,10 @@
 	visibility: hidden;
 }
 
-.info {
-	font-size: large;
-	margin-bottom: 10px;
-}
-
 .time {
 	font-size: xx-large;
 	font-weight: bold;
+	margin-top: 10px;
 }
 
 button {

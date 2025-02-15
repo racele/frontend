@@ -13,16 +13,13 @@ button {
 	border-radius: 20px;
 	cursor: pointer;
 	display: flex;
+	font-size: 24px;
+	font-weight: bold;
 	height: 100%;
+	padding: 20px;
 	width: 100%;
 }
 
 button:hover {
-	transform: translatey(5px);
-}
-
-span {
-	font-size: 24px;
-	font-weight: bold;
-	margin: 20px;
+	transform: translateY(5px);
 }
