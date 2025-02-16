@@ -13,9 +13,10 @@ import { ActivatedRoute } from "@angular/router";
 import { WordService } from "../../words/words.service";
 import { Mode, State } from "../../words/words.types";
 import { WordComponent } from "./word/word.component";
+import { KeyboardComponent } from "./keyboard/keyboard.component";
 
 @Component({
-	imports: [WordComponent],
+	imports: [WordComponent,KeyboardComponent],
 	selector: "app-game",
 	styleUrl: "./game.component.css",
 	templateUrl: "./game.component.html",
@@ -30,6 +31,9 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 
 	@ViewChild("timer")
 	timer!: ElementRef<HTMLTimeElement>;
+
+	@ViewChild(KeyboardComponent)
+    keyboard!: KeyboardComponent;
 
 	constructor(route: ActivatedRoute, words: WordService) {
 		this.route = route;
@@ -83,7 +87,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 
 	async ngAfterViewInit(): Promise<void> {
 		this.updateWords();
-
+		this.keyboard.updateKeyboard(this.words.progress.guesses);
 		try {
 			await this.words.load();
 		} catch {
@@ -116,7 +120,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		} else if (key === "delete" && this.practice) {
 			this.reset();
 		} else if (key === "enter") {
-			this.words.enterGuess();
+			this.words.enterGuess() && this.keyboard.updateKeyboard(this.words.progress.guesses);
 
 			if (this.words.progress.state === State.Loss) {
 				setTimeout(alert, 20, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);
@@ -130,12 +134,11 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 
 	reset(): void {
 		this.words.reset();
-
+		this.keyboard.initKeyboard();
 		if (this.words.last !== null) {
 			alert(`The solution was: ${this.words.last.solution?.toUpperCase()}`);
 			this.words.last = null;
 		}
-
 		this.updateWords();
 	}
 
@@ -145,7 +148,6 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		for (const word of this.grid) {
 			const guess = progress.guesses.pop() ?? "";
 			const entered = progress.guesses.length > 0;
-
 			word.setWord(guess, entered, progress.solution);
 		}
 	}
