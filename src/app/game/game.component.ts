@@ -1,16 +1,14 @@
 import {
 	AfterViewInit,
 	Component,
-	ElementRef,
 	HostListener,
 	OnInit,
 	QueryList,
-	ViewChild,
 	ViewChildren,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { WordService } from "../../words/words.service";
-import { Mode, Result } from "../../words/words.types";
+import { Mode, State } from "../../words/words.types";
 import { WordComponent } from "./word/word.component";
 
 @Component({
@@ -23,18 +21,34 @@ export class GameComponent implements AfterViewInit, OnInit {
 	route: ActivatedRoute;
 	words: WordService;
 
-	@ViewChild("button")
-	button!: ElementRef<HTMLButtonElement>;
-
 	@ViewChildren(WordComponent)
 	grid!: QueryList<WordComponent>;
-
-	@ViewChild("info")
-	info!: ElementRef<HTMLSpanElement>;
 
 	constructor(route: ActivatedRoute, words: WordService) {
 		this.route = route;
 		this.words = words;
+	}
+
+	get day() {
+		const format = new Intl.DateTimeFormat(undefined, {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		});
+
+		if (this.words.last !== null && this.words.last.date !== null) {
+			return format.format(new Date(this.words.last.date));
+		}
+
+		if (this.words.progress.date !== null) {
+			return format.format(new Date(this.words.progress.date));
+		}
+
+		return "Unknown";
+	}
+
+	get initial(): boolean {
+		return this.words.progress.state === State.Initial && this.words.last === null;
 	}
 
 	get practice(): boolean {
@@ -50,11 +64,9 @@ export class GameComponent implements AfterViewInit, OnInit {
 			alert("Could not load word list!");
 		}
 
-		if (this.words.progress === null) {
-			this.words.reset();
+		if (this.initial || this.words.last !== null) {
+			this.reset();
 		}
-
-		this.updateWords();
 	}
 
 	ngOnInit(): void {
@@ -72,13 +84,13 @@ export class GameComponent implements AfterViewInit, OnInit {
 		} else if (key === "backspace") {
 			this.words.removeLetter();
 		} else if (key === "delete" && this.practice) {
-			this.words.reset();
+			this.reset();
 		} else if (key === "enter") {
 			this.words.enterGuess();
 
-			if (this.words.progress?.result === Result.Loss) {
-				setTimeout(alert, 0, `The solution was: ${this.words.progress.solution.toUpperCase()}`);
-			} else if (this.words.progress?.result === Result.Victory) {
+			if (this.words.progress.state === State.Loss) {
+				setTimeout(alert, 0, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);
+			} else if (this.words.progress.state === State.Victory) {
 				setTimeout(alert, 0, "Your time: 0:00.000");
 			}
 		}
@@ -88,29 +100,17 @@ export class GameComponent implements AfterViewInit, OnInit {
 
 	reset(): void {
 		this.words.reset();
+
+		if (this.words.last !== null) {
+			alert(`The solution was: ${this.words.last.solution?.toUpperCase()}`);
+			this.words.last = null;
+		}
+
 		this.updateWords();
 	}
 
 	updateWords(): void {
 		const progress = this.words.progress;
-
-		if (progress === null) {
-			return;
-		}
-
-		if (progress.guesses.length > 1) {
-			this.info.nativeElement.className = "hidden";
-
-			if (this.practice) {
-				this.button.nativeElement.disabled = false;
-			}
-		} else {
-			this.info.nativeElement.className = "";
-
-			if (this.practice) {
-				this.button.nativeElement.disabled = true;
-			}
-		}
 
 		for (const word of this.grid) {
 			const guess = progress.guesses.pop() ?? "";

@@ -9,7 +9,7 @@ export class WordComponent {
 	@ViewChildren("span")
 	spans!: QueryList<ElementRef<HTMLSpanElement>>;
 
-	setWord(guess: string, entered: boolean, solution: string): void {
+	setWord(guess: string, entered: boolean, solution: string | null): void {
 		let index = 0;
 
 		for (const span of this.spans) {
@@ -17,7 +17,7 @@ export class WordComponent {
 
 			span.nativeElement.innerHTML = letter.toUpperCase();
 
-			if (!entered) {
+			if (solution === null || !entered) {
 				span.nativeElement.className = "";
 			} else if (letter === solution[index]) {
 				span.nativeElement.className = "green";

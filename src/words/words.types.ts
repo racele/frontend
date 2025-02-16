@@ -5,13 +5,15 @@ export enum Mode {
 }
 
 export interface Progress {
+	date: string | null;
 	guesses: string[];
-	result: Result;
-	solution: string;
+	solution: string | null;
+	state: State;
 }
 
-export enum Result {
+export enum State {
+	Initial = "initial",
 	Loss = "loss",
-	None = "none",
+	Running = "running",
 	Victory = "victory",
 }

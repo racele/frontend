@@ -1,5 +1,5 @@
 <div>
-	<span #info>Time starts once you enter your first guess</span>
+	<span [class.hidden]="!initial">Time starts once you enter your first guess</span>
 	<span class="time">0:00.000</span>
 </div>
 
@@ -13,5 +13,7 @@
 </div>
 
 @if (practice) {
-<button (click)="reset()" #button>Reset (<kbd>Del</kbd>)</button>
+<button (click)="reset()" [disabled]="initial">Reset (<kbd>Del</kbd>)</button>
+} @else {
+<h2>Current Daily: {{day}}</h2>
 }
