@@ -1,9 +1,12 @@
 import {
 	AfterViewInit,
 	Component,
+	ElementRef,
 	HostListener,
+	OnDestroy,
 	OnInit,
 	QueryList,
+	ViewChild,
 	ViewChildren,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
@@ -17,34 +20,40 @@ import { WordComponent } from "./word/word.component";
 	styleUrl: "./game.component.css",
 	templateUrl: "./game.component.html",
 })
-export class GameComponent implements AfterViewInit, OnInit {
+export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
+	interval: NodeJS.Timeout;
 	route: ActivatedRoute;
 	words: WordService;
 
 	@ViewChildren(WordComponent)
 	grid!: QueryList<WordComponent>;
 
+	@ViewChild("timer")
+	timer!: ElementRef<HTMLTimeElement>;
+
 	constructor(route: ActivatedRoute, words: WordService) {
 		this.route = route;
 		this.words = words;
+
+		this.interval = setInterval(() => {
+			this.timer.nativeElement.innerHTML = this.time;
+		});
 	}
 
-	get day() {
+	get day(): string {
 		const format = new Intl.DateTimeFormat(undefined, {
 			day: "2-digit",
 			month: "2-digit",
 			year: "numeric",
 		});
 
-		if (this.words.last !== null && this.words.last.date !== null) {
-			return format.format(new Date(this.words.last.date));
+		const date = this.words.last?.date ?? this.words.progress.date;
+
+		if (date === null) {
+			return "Unknown";
 		}
 
-		if (this.words.progress.date !== null) {
-			return format.format(new Date(this.words.progress.date));
-		}
-
-		return "Unknown";
+		return format.format(new Date(date));
 	}
 
 	get initial(): boolean {
@@ -56,7 +65,20 @@ export class GameComponent implements AfterViewInit, OnInit {
 	}
 
 	get time(): string {
-		return "00:00.000";
+		const format = new Intl.DateTimeFormat(undefined, {
+			fractionalSecondDigits: 3,
+			minute: "2-digit",
+			second: "2-digit",
+		});
+
+		const max = 60 * 60 * 1000 - 1;
+		const now = Date.now();
+
+		const end = this.words.progress.time.end ?? now;
+		const start = this.words.progress.time.start ?? now;
+		const time = Math.min(max, end - start);
+
+		return format.format(time);
 	}
 
 	async ngAfterViewInit(): Promise<void> {
@@ -71,6 +93,10 @@ export class GameComponent implements AfterViewInit, OnInit {
 		if (this.initial) {
 			this.reset();
 		}
+	}
+
+	ngOnDestroy(): void {
+		clearInterval(this.interval);
 	}
 
 	ngOnInit(): void {
@@ -93,9 +119,9 @@ export class GameComponent implements AfterViewInit, OnInit {
 			this.words.enterGuess();
 
 			if (this.words.progress.state === State.Loss) {
-				setTimeout(alert, 0, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);
+				setTimeout(alert, 20, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);
 			} else if (this.words.progress.state === State.Victory) {
-				setTimeout(alert, 0, `Your time: ${this.time}`);
+				setTimeout(alert, 20, `Congratulations! Your time: ${this.time}`);
 			}
 		}
 

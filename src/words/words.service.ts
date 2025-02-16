@@ -22,7 +22,7 @@ export class WordService {
 		const progress = localStorage.getItem(this.mode);
 
 		if (progress === null) {
-			return { date: null, guesses: [""], solution: null, state: State.Initial };
+			return { date: null, guesses: [""], solution: null, state: State.Initial, time: {} };
 		}
 
 		return JSON.parse(progress);
@@ -47,12 +47,17 @@ export class WordService {
 			return;
 		}
 
+		const now = Date.now();
+
+		progress.state = State.Running;
+		progress.time.start ??= now;
+
 		if (guess === progress.solution) {
 			progress.state = State.Victory;
-		} else if (progress.guesses.length === 1) {
-			progress.state = State.Running;
+			progress.time.end = now;
 		} else if (progress.guesses.length === 6) {
 			progress.state = State.Loss;
+			progress.time.end = now;
 		}
 
 		progress.guesses.unshift("");
@@ -124,7 +129,7 @@ export class WordService {
 			this.last = this.progress;
 		}
 
-		this.setProgress({ date, guesses, solution, state: State.Initial });
+		this.setProgress({ date, guesses, solution, state: State.Initial, time: {} });
 	}
 
 	setProgress(progress: Progress): void {

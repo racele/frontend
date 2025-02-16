@@ -16,12 +16,12 @@ export class LogoutComponent {
 		this.router = router;
 	}
 
-	cancel() {
+	cancel(): void {
 		alert("Logout cancelled!");
 		this.router.navigateByUrl("");
 	}
 
-	confirm() {
+	confirm(): void {
 		this.http.removeToken();
 
 		alert("Logout successful!");

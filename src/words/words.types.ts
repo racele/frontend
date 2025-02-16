@@ -9,6 +9,7 @@ export interface Progress {
 	guesses: string[];
 	solution: string | null;
 	state: State;
+	time: Time;
 }
 
 export enum State {
@@ -16,4 +17,9 @@ export enum State {
 	Loss = "loss",
 	Running = "running",
 	Victory = "victory",
+}
+
+export interface Time {
+	end?: number;
+	start?: number;
 }

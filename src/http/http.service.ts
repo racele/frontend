@@ -12,7 +12,7 @@ export class HttpService {
 		this.client = new HttpClient();
 	}
 
-	get loggedIn() {
+	get loggedIn(): boolean {
 		return this.client.token !== null;
 	}
 

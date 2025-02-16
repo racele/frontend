@@ -10,24 +10,34 @@ export class WordComponent {
 	spans!: QueryList<ElementRef<HTMLSpanElement>>;
 
 	setWord(guess: string, entered: boolean, solution: string | null): void {
-		let index = 0;
+		const classes = Array(5).fill("");
+		const letters = Array.from(guess);
 
-		for (const span of this.spans) {
-			const letter = guess[index] ?? "";
+		if (entered && solution !== null) {
+			const letters = Array.from(solution);
 
-			span.nativeElement.innerHTML = letter.toUpperCase();
-
-			if (solution === null || !entered) {
-				span.nativeElement.className = "";
-			} else if (letter === solution[index]) {
-				span.nativeElement.className = "green";
-			} else if (solution.includes(letter)) {
-				span.nativeElement.className = "yellow";
-			} else {
-				span.nativeElement.className = "gray";
+			for (let i = 0; i < guess.length; i++) {
+				if (guess[i] === solution[i]) {
+					classes[i] = "green";
+					letters[i] = "";
+				} else {
+					classes[i] = "gray";
+				}
 			}
 
-			index++;
+			for (let i = 0; i < guess.length; i++) {
+				if (classes[i] === "gray" && letters.includes(guess[i])) {
+					classes[i] = "yellow";
+					letters[letters.indexOf(guess[i])] = "";
+				}
+			}
+		}
+
+		for (const span of this.spans) {
+			const letter = letters.shift() ?? "";
+
+			span.nativeElement.className = classes.shift();
+			span.nativeElement.innerHTML = letter.toUpperCase();
 		}
 	}
 }

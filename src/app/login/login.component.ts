@@ -22,7 +22,7 @@ export class LoginComponent {
 		this.router = router;
 	}
 
-	async login() {
+	async login(): Promise<void> {
 		try {
 			const response = await this.http.authorizeUser(this.username, this.password);
 
@@ -40,7 +40,7 @@ export class LoginComponent {
 		}
 	}
 
-	async register() {
+	async register(): Promise<void> {
 		try {
 			const response = await this.http.createUser(this.username, this.password);
 
