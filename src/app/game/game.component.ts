@@ -48,11 +48,15 @@ export class GameComponent implements AfterViewInit, OnInit {
 	}
 
 	get initial(): boolean {
-		return this.words.progress.state === State.Initial && this.words.last === null;
+		return this.words.progress.state === State.Initial;
 	}
 
 	get practice(): boolean {
 		return this.words.mode === Mode.Practice;
+	}
+
+	get time(): string {
+		return "00:00.000";
 	}
 
 	async ngAfterViewInit(): Promise<void> {
@@ -64,7 +68,7 @@ export class GameComponent implements AfterViewInit, OnInit {
 			alert("Could not load word list!");
 		}
 
-		if (this.initial || this.words.last !== null) {
+		if (this.initial) {
 			this.reset();
 		}
 	}
@@ -91,7 +95,7 @@ export class GameComponent implements AfterViewInit, OnInit {
 			if (this.words.progress.state === State.Loss) {
 				setTimeout(alert, 0, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);
 			} else if (this.words.progress.state === State.Victory) {
-				setTimeout(alert, 0, "Your time: 0:00.000");
+				setTimeout(alert, 0, `Your time: ${this.time}`);
 			}
 		}
 
