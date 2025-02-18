@@ -1,11 +1,7 @@
-<div class="keyboard">
-  @for (row of keyboardRows; track row){
-    <div class="keyboard-row">
-      @for (key of row; track key){
-        <button [style]="{'background-color': keyColors[key]}" class="keyboard-key">
-          {{ key }}
-        </button>
-      }
-    </div>
-  }
+@for (row of rows; track row) {
+<div>
+	@for (key of row; track key) {
+	<button [className]="classes(key)" (click)="onclick(key)">{{key}}</button>
+	}
 </div>
+}

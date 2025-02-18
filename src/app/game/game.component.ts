@@ -12,11 +12,11 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { WordService } from "../../words/words.service";
 import { Mode, State } from "../../words/words.types";
-import { WordComponent } from "./word/word.component";
 import { KeyboardComponent } from "./keyboard/keyboard.component";
+import { WordComponent } from "./word/word.component";
 
 @Component({
-	imports: [WordComponent,KeyboardComponent],
+	imports: [KeyboardComponent, WordComponent],
 	selector: "app-game",
 	styleUrl: "./game.component.css",
 	templateUrl: "./game.component.html",
@@ -29,11 +29,11 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChildren(WordComponent)
 	grid!: QueryList<WordComponent>;
 
+	@ViewChild(KeyboardComponent)
+	keyboard!: KeyboardComponent;
+
 	@ViewChild("timer")
 	timer!: ElementRef<HTMLTimeElement>;
-
-	@ViewChild(KeyboardComponent)
-    keyboard!: KeyboardComponent;
 
 	constructor(route: ActivatedRoute, words: WordService) {
 		this.route = route;
@@ -86,8 +86,8 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 
 	async ngAfterViewInit(): Promise<void> {
-		this.updateWords();
-		this.keyboard.updateKeyboard(this.words.progress.guesses);
+		this.update();
+
 		try {
 			await this.words.load();
 		} catch {
@@ -109,9 +109,9 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		});
 	}
 
-	@HostListener("window:keydown", ["$event"])
-	onkeydown(event: KeyboardEvent): void {
-		const key = event.key.toLowerCase();
+	@HostListener("window:keydown", ["$event.key"])
+	onkeydown(input: string): void {
+		const key = input.toLowerCase();
 
 		if (/^[a-z]$/.test(key)) {
 			this.words.addLetter(key);
@@ -120,7 +120,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		} else if (key === "delete" && this.practice) {
 			this.reset();
 		} else if (key === "enter") {
-			this.words.enterGuess() && this.keyboard.updateKeyboard(this.words.progress.guesses);
+			this.words.enterGuess();
 
 			if (this.words.progress.state === State.Loss) {
 				setTimeout(alert, 20, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);
@@ -129,26 +129,30 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 			}
 		}
 
-		this.updateWords();
+		this.update();
 	}
 
 	reset(): void {
 		this.words.reset();
-		this.keyboard.initKeyboard();
+
 		if (this.words.last !== null) {
 			alert(`The solution was: ${this.words.last.solution?.toUpperCase()}`);
 			this.words.last = null;
 		}
-		this.updateWords();
+
+		this.update();
 	}
 
-	updateWords(): void {
+	update(): void {
 		const progress = this.words.progress;
 
 		for (const word of this.grid) {
 			const guess = progress.guesses.pop() ?? "";
 			const entered = progress.guesses.length > 0;
+
 			word.setWord(guess, entered, progress.solution);
 		}
+
+		this.keyboard.update();
 	}
 }

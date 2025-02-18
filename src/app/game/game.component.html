@@ -8,7 +8,9 @@
 	<app-word></app-word>
 	<app-word></app-word>
 </div>
-<app-keyboard></app-keyboard>
+
+<app-keyboard (button)="onkeydown($event)"></app-keyboard>
+
 @if (practice) {
 <button (click)="reset()" [disabled]="initial">Reset (<kbd>Del</kbd>)</button>
 } @else {

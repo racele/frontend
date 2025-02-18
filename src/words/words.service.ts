@@ -24,6 +24,7 @@ export class WordService {
 		if (progress === null) {
 			return { date: null, guesses: [""], solution: null, state: State.Initial, time: {} };
 		}
+
 		return JSON.parse(progress);
 	}
 
@@ -38,12 +39,12 @@ export class WordService {
 		this.setProgress(progress);
 	}
 
-	enterGuess(): boolean {
+	enterGuess(): void {
 		const progress = this.progress;
 		const guess = progress.guesses[0];
 
 		if (!this.words?.guessable.includes(guess) && !this.words?.solutions.includes(guess)) {
-			return false;
+			return;
 		}
 
 		const now = Date.now();
@@ -61,7 +62,6 @@ export class WordService {
 
 		progress.guesses.unshift("");
 		this.setProgress(progress);
-		return true;
 	}
 
 	async load(): Promise<void> {

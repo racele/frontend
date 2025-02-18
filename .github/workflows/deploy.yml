@@ -19,6 +19,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Copy Files
+        run: |
+          cp build.md build/browser/README.md
+          cp LICENSE build/browser
+
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
