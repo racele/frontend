@@ -3,12 +3,12 @@ export interface Auth {
 }
 
 export interface Daily {
-	created_at: string;
+	date: string;
 	language: string;
 	solution: string;
 }
 
-export interface ErrorResponse {
+export interface Error {
 	code: number;
 	message: string;
 }
@@ -18,14 +18,9 @@ export enum HttpMethod {
 	Post = "POST",
 }
 
-export type HttpResponse<T> = Promise<ErrorResponse | SuccessResponse<T>>;
+export type HttpResponse<T> = Promise<Error | T>;
 
 export type Strings = Record<string, string>;
-
-export interface SuccessResponse<T> {
-	code: number;
-	data: T;
-}
 
 export interface User {
 	created_at: number;

@@ -79,7 +79,7 @@ export class WordService {
 			throw new TypeError();
 		}
 
-		this.words = response.data;
+		this.words = response;
 	}
 
 	async loadDaily(): Promise<void> {
@@ -89,7 +89,7 @@ export class WordService {
 			throw new TypeError();
 		}
 
-		this.daily = response.data;
+		this.daily = response;
 
 		if (this.daily.solution !== this.progress?.solution) {
 			this.reset();
@@ -117,7 +117,7 @@ export class WordService {
 		}
 
 		if (this.mode === Mode.Daily && this.daily !== null) {
-			date = this.daily.created_at;
+			date = this.daily.date;
 			solution = this.daily.solution;
 		}
 

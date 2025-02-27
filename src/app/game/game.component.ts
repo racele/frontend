@@ -22,7 +22,7 @@ import { WordComponent } from "./word/word.component";
 	templateUrl: "./game.component.html",
 })
 export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
-	interval: NodeJS.Timeout;
+	interval: number;
 	route: ActivatedRoute;
 	words: WordService;
 

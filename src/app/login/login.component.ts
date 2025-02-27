@@ -33,7 +33,7 @@ export class LoginComponent {
 
 			alert("Login successful!");
 
-			this.http.setToken(response.data.token, this.remember);
+			this.http.setToken(response.token, this.remember);
 			this.router.navigateByUrl("");
 		} catch {
 			alert("Connection error!");
