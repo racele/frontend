@@ -32,3 +32,9 @@ export interface Words {
 	guessable: string[];
 	solutions: string[];
 }
+
+export interface Score {
+	attempts: number;
+	date?: string;
+	time: number;
+}
