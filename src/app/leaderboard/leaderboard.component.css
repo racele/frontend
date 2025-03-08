@@ -1,0 +1,68 @@
+:host {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.radio-container {
+    border: 2px solid #666;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.radio-container input {
+    display: none;
+}
+
+.radio-container label {
+    align-items: center;
+    background-color: #fafafa;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    padding: 10px 20px;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+
+.radio-container label.active {
+    background-color: #666;
+    color: #fff;
+}
+
+table {
+    border: #666 2px solid;
+    border-collapse: separate;
+    border-radius: 5px;
+    border-spacing: 0;
+    font-size: larger;
+    margin-top: 20px;
+    overflow: hidden;
+    width: 80%;
+}
+
+td {
+    background-color: #fafafa;
+    border-right: #666 2px solid;
+    border-top: #666 1px solid;
+}
+
+td,
+th {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+th {
+    background-color: #666;
+}
+
+tr>:last-child {
+    border-right: none;
+}
