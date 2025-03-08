@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "../http/http.service";
-import { Daily, Words, Score } from "../http/http.types";
+import { Daily, Score, Words } from "../http/http.types";
 import { Mode, Progress, State } from "./words.types";
 
 @Injectable({
@@ -62,7 +62,7 @@ export class WordService {
 
 		progress.guesses.unshift("");
 		this.setProgress(progress);
-		this.applyScore()
+		this.applyScore();
 	}
 
 	applyScore(): void {
@@ -72,11 +72,10 @@ export class WordService {
 
 		if (this.progress.time.start === undefined || this.progress.time.end === undefined) {
 			throw new Error("start or end time is undefined");
-			return;
 		}
 
 		const score = {
-			attempts: this.progress.guesses.length-1,
+			attempts: this.progress.guesses.length - 1,
 			time: this.progress.time.end - this.progress.time.start,
 		} as Score;
 

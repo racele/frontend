@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "./http.client";
-import { Auth, Daily, HttpResponse, Score, User, Words } from "./http.types";
+import { Auth, Daily, HttpResponse, Score, Strings, User, Words } from "./http.types";
 
 @Injectable({
 	providedIn: "root",
@@ -45,10 +45,10 @@ export class HttpService {
 		sessionStorage.removeItem("token");
 	}
 	setScore(score: Score): HttpResponse<Score> {
-		const data: any = {
+		const data: Strings = {
 			attempts: score.attempts.toString(),
 			time: score.time.toString(),
-			...(score.date && { date: score.date.toString() })
+			...(score.date && { date: score.date.toString() }),
 		};
 
 		return this.client.post("/users/@me/scores", data);

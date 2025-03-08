@@ -2,10 +2,10 @@ import { Routes } from "@angular/router";
 import { Mode } from "../words/words.types";
 import { GameComponent } from "./game/game.component";
 import { HomeComponent } from "./home/home.component";
+import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
 import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
 import { WipComponent } from "./wip/wip.component";
-import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
 
 export const routes: Routes = [
 	{
