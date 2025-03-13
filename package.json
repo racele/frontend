@@ -1,12 +1,12 @@
 {
 	"dependencies": {
-		"@angular/core": "^19.2.0",
-		"@angular/forms": "^19.2.0",
-		"@angular/router": "^19.2.0"
+		"@angular/core": "^19.2.2",
+		"@angular/forms": "^19.2.2",
+		"@angular/router": "^19.2.2"
 	},
 	"devDependencies": {
-		"@angular/build": "^19.2.0",
-		"@angular/cli": "^19.2.0",
+		"@angular/build": "^19.2.3",
+		"@angular/cli": "^19.2.3",
 		"@biomejs/biome": "^1.9.4"
 	},
 	"scripts": {
