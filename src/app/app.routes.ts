@@ -20,6 +20,11 @@ export const routes: Routes = [
 		title: "Daily Racele",
 	},
 	{
+		component: LeaderboardComponent,
+		path: "leaderboard",
+		title: "Leaderboard",
+	},
+	{
 		component: LoginComponent,
 		path: "login",
 		title: "Login",
@@ -34,11 +39,6 @@ export const routes: Routes = [
 		data: { mode: Mode.Practice },
 		path: "practice",
 		title: "Practice",
-	},
-	{
-		component: LeaderboardComponent,
-		path: "leaderboard",
-		title: "Leaderboard",
 	},
 	{
 		component: WipComponent,

@@ -1,30 +1,35 @@
-<div class="radio-container">
-    <label [class.active]="showDaily">
-        <input type="radio" name="scoreType" value="daily" (change)="setScoreType('daily')">
-        Daily
-    </label>
-    <label [class.active]="!showDaily">
-        <input type="radio" name="scoreType" value="practice" (change)="setScoreType('practice')"
->
-        Practice
-    </label>
+<div (change)="toggleMode()">
+	<label [class.active]="showDaily">
+		<input name="mode" type="radio" checked>
+		Daily
+	</label>
+	<label [class.active]="!showDaily">
+		<input name="mode" type="radio">
+		Practice
+	</label>
 </div>
 
 <table>
-    <thead>
-        <tr>
-            <th>Time</th>
-            <th>Attempts</th>
-            @if (showDaily){ <th>Date</th> }
-        </tr>
-    </thead>
-    <tbody>
-        @for (score of scores;track score){
-        <tr>
-            <td>{{formatTime(score.time)}}</td>
-            <td>{{score.attempts}}</td>
-            @if (showDaily){ <td>{{score.date}}</td> }
-        </tr>
-        }
-    </tbody>
+	<thead>
+		<tr>
+			@if (showDaily) {
+			<th>Date</th>
+			}
+			<th>Guesses</th>
+			<th>Solution</th>
+			<th>Time</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (score of scores; track score) {
+		<tr>
+			@if (showDaily) {
+			<td>{{formatDate(score.date)}}</td>
+			}
+			<td>{{score.guesses}}</td>
+			<td>{{score.solution.toUpperCase()}}</td>
+			<td>{{formatTime(score.time)}}</td>
+		</tr>
+		}
+	</tbody>
 </table>

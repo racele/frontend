@@ -26,32 +26,25 @@ export class LoginComponent {
 		try {
 			const response = await this.http.authorizeUser(this.username, this.password);
 
-			if ("message" in response) {
-				alert(`Error: ${response.message}`);
-				return;
-			}
-
 			alert("Login successful!");
 
 			this.http.setToken(response.token, this.remember);
 			this.router.navigateByUrl("");
-		} catch {
-			alert("Connection error!");
+		} catch (error) {
+			if (error instanceof TypeError) {
+				alert(`${error.message}!`);
+			}
 		}
 	}
 
 	async register(): Promise<void> {
 		try {
-			const response = await this.http.createUser(this.username, this.password);
-
-			if ("message" in response) {
-				alert(`Error: ${response.message}`);
-				return;
+			await this.http.createUser(this.username, this.password);
+			await this.login();
+		} catch (error) {
+			if (error instanceof TypeError) {
+				alert(`${error.message}!`);
 			}
-
-			this.login();
-		} catch {
-			alert("Connection error!");
 		}
 	}
 }

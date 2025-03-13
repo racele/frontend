@@ -8,7 +8,7 @@ export interface Daily {
 	solution: string;
 }
 
-export interface Error {
+export interface HttpError {
 	code: number;
 	message: string;
 }
@@ -18,7 +18,12 @@ export enum HttpMethod {
 	Post = "POST",
 }
 
-export type HttpResponse<T> = Promise<Error | T>;
+export interface Score {
+	date: string | null;
+	guesses: number;
+	solution: string;
+	time: number;
+}
 
 export type Strings = Record<string, string>;
 
@@ -31,10 +36,4 @@ export interface User {
 export interface Words {
 	guessable: string[];
 	solutions: string[];
-}
-
-export interface Score {
-	attempts: number;
-	date?: string;
-	time: number;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "../http/http.service";
-import { Daily, Score, Words } from "../http/http.types";
+import { Daily, Words } from "../http/http.types";
 import { Mode, Progress, State } from "./words.types";
 
 @Injectable({
@@ -18,14 +18,28 @@ export class WordService {
 		this.http = http;
 	}
 
+	get default(): Progress {
+		return { date: null, guesses: [""], solution: null, state: State.Initial, time: {} };
+	}
+
 	get progress(): Progress {
 		const progress = localStorage.getItem(this.mode);
 
 		if (progress === null) {
-			return { date: null, guesses: [""], solution: null, state: State.Initial, time: {} };
+			return this.default;
 		}
 
 		return JSON.parse(progress);
+	}
+
+	get time(): number {
+		const max = 60 * 60 * 1000 - 1;
+		const now = Date.now();
+
+		const end = this.progress.time.end ?? now;
+		const start = this.progress.time.start ?? now;
+
+		return Math.min(end - start, max);
 	}
 
 	addLetter(letter: string): void {
@@ -39,7 +53,7 @@ export class WordService {
 		this.setProgress(progress);
 	}
 
-	enterGuess(): void {
+	async enterGuess(): Promise<void> {
 		const progress = this.progress;
 		const guess = progress.guesses[0];
 
@@ -62,29 +76,8 @@ export class WordService {
 
 		progress.guesses.unshift("");
 		this.setProgress(progress);
-		this.applyScore();
-	}
 
-	applyScore(): void {
-		if (this.progress.state !== State.Victory) {
-			return;
-		}
-
-		if (this.progress.time.start === undefined || this.progress.time.end === undefined) {
-			throw new Error("start or end time is undefined");
-		}
-
-		const score = {
-			attempts: this.progress.guesses.length - 1,
-			time: this.progress.time.end - this.progress.time.start,
-		} as Score;
-
-		if (this.mode === Mode.Daily) {
-			score.date = this.daily?.date;
-			this.http.setScore(score);
-		} else {
-			this.http.setScore(score);
-		}
+		await this.postScore();
 	}
 
 	async load(): Promise<void> {
@@ -96,26 +89,32 @@ export class WordService {
 			return;
 		}
 
-		const response = await this.http.getWords();
-
-		if ("message" in response) {
-			throw new TypeError();
-		}
-
-		this.words = response;
+		this.words = await this.http.getWords();
 	}
 
 	async loadDaily(): Promise<void> {
-		const response = await this.http.getDaily();
-
-		if ("message" in response) {
-			throw new TypeError();
-		}
-
-		this.daily = response;
+		this.daily = await this.http.getDaily();
 
 		if (this.daily.solution !== this.progress?.solution) {
 			this.reset();
+		}
+	}
+
+	async postScore(): Promise<void> {
+		if (
+			!this.http.loggedIn ||
+			this.progress.solution === null ||
+			this.progress.state !== State.Victory
+		) {
+			return;
+		}
+
+		const guesses = this.progress.guesses.length - 1;
+
+		if (this.mode === Mode.Daily) {
+			await this.http.createScore(guesses, this.progress.solution, this.time, this.daily?.date);
+		} else {
+			await this.http.createScore(guesses, this.progress.solution, this.time);
 		}
 	}
 
@@ -131,28 +130,27 @@ export class WordService {
 	}
 
 	reset(): void {
-		let date: string | null = null;
-		let guesses = [""];
-		let solution: string | null = null;
+		const progress = this.default;
 
 		if (this.progress.state === State.Initial) {
-			guesses = this.progress.guesses;
+			progress.guesses = this.progress.guesses;
 		}
 
 		if (this.mode === Mode.Daily && this.daily !== null) {
-			date = this.daily.date;
-			solution = this.daily.solution;
+			progress.date = this.daily.date;
+			progress.solution = this.daily.solution;
 		}
 
 		if (this.mode === Mode.Practice && this.words !== null) {
-			solution = this.words.solutions[Math.floor(Math.random() * this.words.solutions.length)];
+			progress.solution =
+				this.words.solutions[Math.floor(Math.random() * this.words.solutions.length)];
 		}
 
 		if (this.progress.state === State.Running) {
 			this.last = this.progress;
 		}
 
-		this.setProgress({ date, guesses, solution, state: State.Initial, time: {} });
+		this.setProgress(progress);
 	}
 
 	setProgress(progress: Progress): void {

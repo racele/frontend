@@ -44,20 +44,18 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		});
 	}
 
-	get day(): string {
-		const format = new Intl.DateTimeFormat(undefined, {
-			day: "2-digit",
-			month: "2-digit",
-			year: "numeric",
-		});
-
+	get date(): string {
 		const date = this.words.last?.date ?? this.words.progress.date;
 
 		if (date === null) {
 			return "Unknown";
 		}
 
-		return format.format(new Date(date));
+		return new Date(date).toLocaleDateString(undefined, {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		});
 	}
 
 	get initial(): boolean {
@@ -69,20 +67,11 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 
 	get time(): string {
-		const format = new Intl.DateTimeFormat(undefined, {
+		return new Date(this.words.time).toLocaleTimeString(undefined, {
 			fractionalSecondDigits: 3,
 			minute: "2-digit",
 			second: "2-digit",
 		});
-
-		const max = 60 * 60 * 1000 - 1;
-		const now = Date.now();
-
-		const end = this.words.progress.time.end ?? now;
-		const start = this.words.progress.time.start ?? now;
-		const time = Math.min(max, end - start);
-
-		return format.format(time);
 	}
 
 	async ngAfterViewInit(): Promise<void> {
@@ -110,7 +99,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 
 	@HostListener("window:keydown", ["$event.key"])
-	onkeydown(input: string): void {
+	async onkeydown(input: string): Promise<void> {
 		const key = input.toLowerCase();
 
 		if (/^[a-z]$/.test(key)) {
@@ -120,7 +109,11 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		} else if (key === "delete" && this.practice) {
 			this.reset();
 		} else if (key === "enter") {
-			this.words.enterGuess();
+			try {
+				await this.words.enterGuess();
+			} catch {
+				alert("Could not post score to the leaderboard!");
+			}
 
 			if (this.words.progress.state === State.Loss) {
 				setTimeout(alert, 20, `The solution was: ${this.words.progress.solution?.toUpperCase()}`);

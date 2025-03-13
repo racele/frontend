@@ -2,67 +2,57 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
+	gap: 20px;
+	padding: 20px;
 }
 
-.radio-container {
-	border: 2px solid #666;
-	border-radius: 5px;
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-	overflow: hidden;
-}
-
-.radio-container input {
-	display: none;
-}
-
-.radio-container label {
-	align-items: center;
-	background-color: #fafafa;
-	color: #000;
-	cursor: pointer;
-	display: flex;
-	font-weight: bold;
-	justify-content: center;
-	padding: 10px 20px;
-	transition: background-color 0.2s;
-	user-select: none;
-}
-
-.radio-container label.active {
+.active {
 	background-color: #666;
 	color: #fff;
 }
 
-table {
-	border: #666 2px solid;
-	border-collapse: separate;
-	border-radius: 5px;
-	border-spacing: 0;
-	font-size: larger;
-	margin-top: 20px;
+div {
+	background-color: #666;
+	border: 2px solid #666;
+	border-radius: 10px;
+	display: flex;
 	overflow: hidden;
+}
+
+input {
+	display: none;
+}
+
+label {
+	background-color: #fff;
+	cursor: pointer;
+	font-weight: bold;
+	padding: 10px 20px;
+}
+
+table {
+	background-color: #666;
+	border: 2px solid #666;
+	border-collapse: collapse;
+	border-radius: 10px;
+	font-size: larger;
+	overflow: hidden;
+	table-layout: fixed;
+	text-align: center;
 	width: 80%;
 }
 
+tbody {
+	overflow: scroll;
+}
+
 td {
-	background-color: #fafafa;
-	border-right: #666 2px solid;
-	border-top: #666 1px solid;
-}
-
-td,
-th {
-	padding: 10px 20px;
-	text-align: center;
+	background-color: #fff;
+	border: 2px solid #666;
+	padding: 10px;
 }
 
 th {
-	background-color: #666;
-}
-
-tr > :last-child {
-	border-right: none;
+	color: #fff;
+	padding: 10px;
 }

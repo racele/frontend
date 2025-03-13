@@ -1,52 +1,64 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpService } from "../../http/http.service";
 import { Score } from "../../http/http.types";
 
 @Component({
 	selector: "app-leaderboard",
-	imports: [],
-	templateUrl: "./leaderboard.component.html",
 	styleUrl: "./leaderboard.component.css",
+	templateUrl: "./leaderboard.component.html",
 })
-export class LeaderboardComponent {
+export class LeaderboardComponent implements OnInit {
 	http: HttpService;
 	router: Router;
-	scores: Score[] = [];
-	scoresDaily: Score[] = [];
-	scoresPractice: Score[] = [];
-	showDaily = false;
+
+	daily: Score[] = [];
+	practice: Score[] = [];
+	showDaily = true;
 
 	constructor(http: HttpService, router: Router) {
 		this.http = http;
 		this.router = router;
 	}
 
-	async ngAfterViewInit(): Promise<void> {
-		try {
-			const dailyScoresResult = await this.http.getScoresDaily();
-			const practiceScoresResult = await this.http.getScoresPractice();
-			this.scoresDaily = "message" in dailyScoresResult ? [] : dailyScoresResult;
-			this.scoresPractice = "message" in practiceScoresResult ? [] : practiceScoresResult;
-		} catch {
-			alert("Could not read Scores");
+	get scores() {
+		if (this.showDaily) {
+			return this.daily;
 		}
-		this.scoresDaily.sort((a, b) => a.time - b.time);
-		this.scoresPractice.sort((a, b) => a.time - b.time);
-		this.scores = this.scoresPractice;
+
+		return this.practice;
+	}
+
+	formatDate(date: string | null): string {
+		if (date === null) {
+			return "Unknown";
+		}
+
+		return new Date(date).toLocaleDateString(undefined, {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		});
 	}
 
 	formatTime(time: number): string {
-		const format = new Intl.DateTimeFormat(undefined, {
+		return new Date(time).toLocaleTimeString(undefined, {
 			fractionalSecondDigits: 3,
 			minute: "2-digit",
 			second: "2-digit",
 		});
-		return format.format(time);
 	}
 
-	setScoreType(type: "daily" | "practice"): void {
-		this.showDaily = type === "daily";
-		this.scores = this.showDaily ? this.scoresDaily : this.scoresPractice;
+	async ngOnInit(): Promise<void> {
+		try {
+			this.daily = await this.http.listDaily();
+			this.practice = await this.http.listPractice();
+		} catch {
+			alert("Could not load scores!");
+		}
+	}
+
+	toggleMode(): void {
+		this.showDaily = !this.showDaily;
 	}
 }
