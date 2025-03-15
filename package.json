@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@angular/core": "^19.2.2",
 		"@angular/forms": "^19.2.2",
 		"@angular/router": "^19.2.2"
 	},

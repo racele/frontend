@@ -7,6 +7,7 @@ export enum Mode {
 export interface Progress {
 	date: string | null;
 	guesses: string[];
+	posted: boolean;
 	solution: string | null;
 	state: State;
 	time: Time;

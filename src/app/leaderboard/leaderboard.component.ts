@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { HttpService } from "../../http/http.service";
 import { Score } from "../../http/http.types";
 
@@ -10,18 +9,16 @@ import { Score } from "../../http/http.types";
 })
 export class LeaderboardComponent implements OnInit {
 	http: HttpService;
-	router: Router;
 
 	daily: Score[] = [];
 	practice: Score[] = [];
 	showDaily = true;
 
-	constructor(http: HttpService, router: Router) {
+	constructor(http: HttpService) {
 		this.http = http;
-		this.router = router;
 	}
 
-	get scores() {
+	get scores(): Score[] {
 		if (this.showDaily) {
 			return this.daily;
 		}

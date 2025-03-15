@@ -18,7 +18,7 @@ a {
 	align-items: center;
 	color: #fff;
 	display: flex;
-	font-size: 18px;
+	font-size: large;
 	font-weight: bold;
 	margin-right: 30px;
 	text-decoration: none;
@@ -29,7 +29,7 @@ a:hover {
 }
 
 h1 {
-	font-size: 24px;
+	font-size: x-large;
 }
 
 header {

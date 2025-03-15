@@ -109,8 +109,10 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		} else if (key === "delete" && this.practice) {
 			this.reset();
 		} else if (key === "enter") {
+			this.words.enterGuess();
+
 			try {
-				await this.words.enterGuess();
+				await this.words.postScore();
 			} catch {
 				alert("Could not post score to the leaderboard!");
 			}

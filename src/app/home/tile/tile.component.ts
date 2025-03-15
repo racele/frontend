@@ -11,11 +11,11 @@ export class TileComponent {
 	http: HttpService;
 	router: Router;
 
-	@Input({ transform: booleanAttribute })
-	loginOnly = false;
-
-	@Input()
+	@Input({ required: true })
 	route = "";
+
+	@Input({ transform: booleanAttribute })
+	unlocked = false;
 
 	constructor(http: HttpService, router: Router) {
 		this.http = http;
@@ -23,7 +23,7 @@ export class TileComponent {
 	}
 
 	get active(): boolean {
-		return this.http.loggedIn || !this.loginOnly;
+		return this.http.loggedIn || this.unlocked;
 	}
 
 	onclick(): void {

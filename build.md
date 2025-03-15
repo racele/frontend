@@ -7,4 +7,3 @@ Build files for the Racele frontend.
 Visit the site here: https://racele.github.io
 
 The backend is not being hosted yet and needs to be run locally.
-Instructions can be found at https://github.com/racele/backend.

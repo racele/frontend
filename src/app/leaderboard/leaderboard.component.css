@@ -42,10 +42,6 @@ table {
 	width: 80%;
 }
 
-tbody {
-	overflow: scroll;
-}
-
 td {
 	background-color: #fff;
 	border: 2px solid #666;

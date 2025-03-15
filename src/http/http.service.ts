@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "./http.client";
-import { Auth, Daily, Score, Strings, User, Words } from "./http.types";
+import { Auth, Daily, Query, Score, User, Words } from "./http.types";
 
 @Injectable({
 	providedIn: "root",
@@ -21,17 +21,17 @@ export class HttpService {
 	}
 
 	createScore(guesses: number, solution: string, time: number, date?: string): Promise<Score> {
-		const values: Strings = {
+		const query: Query = {
 			guesses: guesses.toString(),
 			solution,
 			time: time.toString(),
 		};
 
 		if (date !== undefined) {
-			values.date = date;
+			query.date = date;
 		}
 
-		return this.client.post("/users/@me/scores", values);
+		return this.client.post("/users/@me/scores", query);
 	}
 
 	createUser(username: string, password: string): Promise<User> {

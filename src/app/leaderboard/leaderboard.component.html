@@ -15,6 +15,7 @@
 			@if (showDaily) {
 			<th>Date</th>
 			}
+
 			<th>Guesses</th>
 			<th>Solution</th>
 			<th>Time</th>
@@ -26,6 +27,7 @@
 			@if (showDaily) {
 			<td>{{formatDate(score.date)}}</td>
 			}
+
 			<td>{{score.guesses}}</td>
 			<td>{{score.solution.toUpperCase()}}</td>
 			<td>{{formatTime(score.time)}}</td>

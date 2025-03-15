@@ -18,14 +18,14 @@ export enum HttpMethod {
 	Post = "POST",
 }
 
+export type Query = Record<string, string>;
+
 export interface Score {
 	date: string | null;
 	guesses: number;
 	solution: string;
 	time: number;
 }
-
-export type Strings = Record<string, string>;
 
 export interface User {
 	created_at: number;

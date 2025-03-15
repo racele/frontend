@@ -1,22 +1,22 @@
-import { HttpError, HttpMethod, Strings } from "./http.types";
+import { HttpError, HttpMethod, Query } from "./http.types";
 
 export class HttpClient {
 	get token(): string | null {
 		return localStorage.getItem("token") ?? sessionStorage.getItem("token");
 	}
 
-	get<T>(route: string, values: Strings): Promise<T> {
-		return this.request(HttpMethod.Get, route, values);
+	get<T>(path: string, query: Query): Promise<T> {
+		return this.request(HttpMethod.Get, path, query);
 	}
 
-	post<T>(route: string, values: Strings): Promise<T> {
-		return this.request(HttpMethod.Post, route, values);
+	post<T>(path: string, query: Query): Promise<T> {
+		return this.request(HttpMethod.Post, path, query);
 	}
 
-	async request<T>(method: HttpMethod, route: string, values: Strings): Promise<T> {
-		const body = new URLSearchParams(values);
+	async request<T>(method: HttpMethod, path: string, query: Query): Promise<T> {
+		const body = new URLSearchParams(query);
 		const headers = new Headers();
-		const url = new URL(route, "http://localhost:3000");
+		const url = new URL(path, "http://localhost:3000");
 
 		if (this.token !== null) {
 			headers.set("Authorization", `Bearer ${this.token}`);

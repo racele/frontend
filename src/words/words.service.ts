@@ -19,7 +19,14 @@ export class WordService {
 	}
 
 	get default(): Progress {
-		return { date: null, guesses: [""], solution: null, state: State.Initial, time: {} };
+		return {
+			date: null,
+			guesses: [""],
+			posted: false,
+			solution: null,
+			state: State.Initial,
+			time: {},
+		};
 	}
 
 	get progress(): Progress {
@@ -53,7 +60,7 @@ export class WordService {
 		this.setProgress(progress);
 	}
 
-	async enterGuess(): Promise<void> {
+	enterGuess(): void {
 		const progress = this.progress;
 		const guess = progress.guesses[0];
 
@@ -76,8 +83,6 @@ export class WordService {
 
 		progress.guesses.unshift("");
 		this.setProgress(progress);
-
-		await this.postScore();
 	}
 
 	async load(): Promise<void> {
@@ -101,21 +106,22 @@ export class WordService {
 	}
 
 	async postScore(): Promise<void> {
-		if (
-			!this.http.loggedIn ||
-			this.progress.solution === null ||
-			this.progress.state !== State.Victory
-		) {
+		const progress = this.progress;
+
+		if (!this.http.loggedIn || progress.posted || progress.solution === null || progress.state !== State.Victory) {
 			return;
 		}
 
-		const guesses = this.progress.guesses.length - 1;
+		const guesses = progress.guesses.length - 1;
 
 		if (this.mode === Mode.Daily) {
-			await this.http.createScore(guesses, this.progress.solution, this.time, this.daily?.date);
+			await this.http.createScore(guesses, progress.solution, this.time, this.daily?.date);
 		} else {
-			await this.http.createScore(guesses, this.progress.solution, this.time);
+			await this.http.createScore(guesses, progress.solution, this.time);
 		}
+
+		progress.posted = true;
+		this.setProgress(progress);
 	}
 
 	removeLetter(): void {
@@ -142,8 +148,7 @@ export class WordService {
 		}
 
 		if (this.mode === Mode.Practice && this.words !== null) {
-			progress.solution =
-				this.words.solutions[Math.floor(Math.random() * this.words.solutions.length)];
+			progress.solution = this.words.solutions[Math.floor(Math.random() * this.words.solutions.length)];
 		}
 
 		if (this.progress.state === State.Running) {
