@@ -33,7 +33,7 @@ label {
 
 table {
 	background-color: #666;
-	border: 2px solid #666;
+	/* border: 2px solid #666; */
 	border-collapse: collapse;
 	border-radius: 10px;
 	font-size: larger;

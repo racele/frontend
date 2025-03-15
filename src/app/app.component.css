@@ -49,6 +49,7 @@ header {
 
 main {
 	background-color: var(--background);
+	overflow-y: auto;
 	border-top: 2px solid var(--border-main);
 	color: var(--color);
 	flex: 1;
