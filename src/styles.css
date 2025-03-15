@@ -3,10 +3,27 @@
 	src: url(/fonts/digital.ttf);
 }
 
+.dark {
+	--background: #333;
+	--background-layer: #666;
+	--background-light: #ccc;
+	--border: #999;
+	--border-main: #666;
+	--color: #fff;
+}
+
+.light {
+	--background: #ccc;
+	--background-layer: #999;
+	--background-light: #fff;
+	--border: #333;
+	--border-main: transparent;
+	--color: #333;
+}
+
 * {
 	border: 0;
 	box-sizing: border-box;
-	color: inherit;
 	font-family: sans-serif;
 	margin: 0;
 	min-height: 0;

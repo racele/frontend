@@ -11,7 +11,19 @@ import { HttpService } from "../http/http.service";
 export class AppComponent {
 	http: HttpService;
 
+	get dark(): boolean {
+		return localStorage.getItem("dark") !== null;
+	}
+
 	constructor(http: HttpService) {
 		this.http = http;
+	}
+
+	toggleMode(): void {
+		if (this.dark) {
+			localStorage.removeItem("dark");
+		} else {
+			localStorage.setItem("dark", "");
+		}
 	}
 }

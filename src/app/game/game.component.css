@@ -7,7 +7,7 @@
 }
 
 button {
-	border: 2px solid #333;
+	border: 2px solid var(--border);
 	border-radius: 10px;
 	cursor: pointer;
 	padding: 10px;
@@ -32,8 +32,9 @@ kbd {
 
 time {
 	background-color: #999;
-	border: 2px solid #666;
+	border: 3px solid #666;
 	border-radius: 10px;
+	color: #333;
 	font-family: digital, monospace;
 	font-size: xxx-large;
 	font-weight: bold;

@@ -8,15 +8,24 @@
 	height: 18px;
 }
 
+.hidden {
+	display: none;
+}
+
 .icon {
 	border-radius: 50%;
 	height: 40px;
 	margin: 10px;
 }
 
+.mode {
+	height: 24px;
+}
+
 a {
 	align-items: center;
 	color: #fff;
+	cursor: pointer;
 	display: flex;
 	font-size: large;
 	font-weight: bold;
@@ -25,7 +34,7 @@ a {
 }
 
 a:hover {
-	color: #bbb;
+	color: #ccc;
 }
 
 h1 {
@@ -39,8 +48,9 @@ header {
 }
 
 main {
-	background-color: #ccc;
-	color: #333;
+	background-color: var(--background);
+	border-top: 2px solid var(--border-main);
+	color: var(--color);
 	flex: 1;
 }
 

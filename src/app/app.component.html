@@ -12,12 +12,20 @@
 		<a routerLink="login">Login</a>
 		}
 
+		<a [class.hidden]="!dark" (click)="toggleMode()">
+			<img class="mode" src="images/dark.png">
+		</a>
+
+		<a [class.hidden]="dark" (click)="toggleMode()">
+			<img class="mode" src="images/light.png">
+		</a>
+
 		<a href="https://github.com/racele">
 			<img class="external" src="images/github.png">
 		</a>
 	</nav>
 </header>
 
-<main>
+<main [class.dark]="dark" [class.light]="!dark">
 	<router-outlet></router-outlet>
 </main>
