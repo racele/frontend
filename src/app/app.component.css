@@ -49,10 +49,11 @@ header {
 
 main {
 	background-color: var(--background);
-	overflow-y: auto;
 	border-top: 2px solid var(--border-main);
 	color: var(--color);
 	flex: 1;
+	overflow: auto;
+	scrollbar-color: var(--background-layer) var(--background);
 }
 
 nav {

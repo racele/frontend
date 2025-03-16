@@ -1,16 +1,17 @@
-<div (change)="toggleMode()">
+<div class="mode" (change)="toggleMode()">
 	<label [class.active]="showDaily">
 		<input name="mode" type="radio" checked>
 		Daily
 	</label>
+
 	<label [class.active]="!showDaily">
 		<input name="mode" type="radio">
 		Practice
 	</label>
 </div>
 
-<table>
-	<thead>
+<div class="table">
+	<table>
 		<tr>
 			@if (showDaily) {
 			<th>Date</th>
@@ -20,8 +21,7 @@
 			<th>Solution</th>
 			<th>Time</th>
 		</tr>
-	</thead>
-	<tbody>
+
 		@for (score of scores; track score) {
 		<tr>
 			@if (showDaily) {
@@ -33,5 +33,5 @@
 			<td>{{formatTime(score.time)}}</td>
 		</tr>
 		}
-	</tbody>
-</table>
+	</table>
+</div>

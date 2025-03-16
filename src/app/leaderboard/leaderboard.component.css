@@ -11,12 +11,20 @@
 	color: #fff;
 }
 
-div {
+.mode {
 	background-color: #666;
 	border: 2px solid #666;
 	border-radius: 10px;
 	display: flex;
 	overflow: hidden;
+}
+
+.table {
+	background-color: #666;
+	border: 2px solid #666;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 80%;
 }
 
 input {
@@ -32,20 +40,16 @@ label {
 }
 
 table {
-	background-color: #666;
-	/* border: 2px solid #666; */
-	border-collapse: collapse;
-	border-radius: 10px;
+	border-spacing: 2px;
 	font-size: larger;
-	overflow: hidden;
+	margin: -2px;
 	table-layout: fixed;
 	text-align: center;
-	width: 80%;
+	width: calc(100% + 4px);
 }
 
 td {
 	background-color: var(--background-light);
-	border: 2px solid #666;
 	color: #333;
 	padding: 10px;
 }
