@@ -16,6 +16,7 @@
 	border-radius: 50%;
 	height: 40px;
 	margin: 10px;
+	overflow: hidden;
 }
 
 .mode {
@@ -30,7 +31,6 @@ a {
 	font-size: large;
 	font-weight: bold;
 	margin-right: 30px;
-	text-decoration: none;
 }
 
 a:hover {
