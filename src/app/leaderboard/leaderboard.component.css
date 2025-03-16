@@ -32,8 +32,7 @@ input {
 }
 
 label {
-	background-color: var(--background-light);
-	color: #333;
+	background-color: var(--light);
 	cursor: pointer;
 	font-weight: bold;
 	padding: 10px 20px;
@@ -49,8 +48,7 @@ table {
 }
 
 td {
-	background-color: var(--background-light);
-	color: #333;
+	background-color: var(--light);
 	padding: 10px;
 }
 

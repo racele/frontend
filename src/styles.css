@@ -4,21 +4,21 @@
 }
 
 .dark {
-	--background: #333;
-	--background-layer: #666;
-	--background-light: #ccc;
-	--border: #999;
-	--border-main: #666;
-	--color: #fff;
+	--border: #444;
+	--main: #222;
+	--inverted: #ddd;
+	--layer: #444;
+	--light: #444;
+	--lighter: #666;
 }
 
 .light {
-	--background: #ccc;
-	--background-layer: #999;
-	--background-light: #fff;
-	--border: #333;
-	--border-main: transparent;
-	--color: #333;
+	--border: #ddd;
+	--main: #ddd;
+	--inverted: #222;
+	--layer: #bbb;
+	--light: #fff;
+	--lighter: #fff;
 }
 
 * {
@@ -33,6 +33,18 @@
 
 body {
 	height: 100%;
+}
+
+button {
+	background-color: var(--light);
+	border: 2px solid var(--inverted);
+	border-radius: 10px;
+	color: inherit;
+	cursor: pointer;
+}
+
+button:hover {
+	transform: translateY(2px);
 }
 
 html {

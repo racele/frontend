@@ -7,7 +7,7 @@
 
 div {
 	align-items: center;
-	background-color: var(--background-layer);
+	background-color: var(--layer);
 	border-radius: 50px;
 	display: flex;
 	flex-direction: column;

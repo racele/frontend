@@ -2,18 +2,15 @@
 	width: 30%;
 }
 
-.active {
-	background-image: linear-gradient(300deg, transparent, var(--background-light) 30%), url(/images/tile.webp);
-	color: #333;
+.disabled {
+	cursor: not-allowed;
+	filter: brightness(60%);
 }
 
 button {
-	background-image: linear-gradient(300deg, transparent, var(--background-layer) 30%), url(/images/tile.webp);
+	background-image: linear-gradient(300deg, transparent, var(--light) 30%), url(/images/tile.webp);
 	background-size: cover;
-	border: 2px solid var(--border);
 	border-radius: 20px;
-	color: var(--color);
-	cursor: pointer;
 	display: flex;
 	font-size: x-large;
 	font-weight: bold;

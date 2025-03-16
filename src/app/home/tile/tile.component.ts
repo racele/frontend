@@ -22,15 +22,15 @@ export class TileComponent {
 		this.router = router;
 	}
 
-	get active(): boolean {
-		return this.http.loggedIn || this.unlocked;
+	get disabled(): boolean {
+		return !this.http.loggedIn && !this.unlocked;
 	}
 
 	onclick(): void {
-		if (this.active) {
-			this.router.navigateByUrl(this.route);
-		} else {
+		if (this.disabled) {
 			alert("Login required!");
+		} else {
+			this.router.navigateByUrl(this.route);
 		}
 	}
 }

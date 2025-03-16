@@ -7,19 +7,19 @@
 
 .gray {
 	background-color: #666;
-	border-color: transparent;
+	border: none;
 	color: #fff;
 }
 
 .green {
-	background-color: #393;
-	border-color: transparent;
+	background-color: #282;
+	border: none;
 	color: #fff;
 }
 
 .yellow {
-	background-color: #c93;
-	border-color: transparent;
+	background-color: #b82;
+	border: none;
 	color: #fff;
 }
 
