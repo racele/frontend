@@ -18,6 +18,14 @@ export class WordService {
 		this.http = http;
 	}
 
+	get language(): string {
+		return localStorage.getItem("language") ?? "en";
+	}
+
+	set language(lang: string) {
+		localStorage.setItem("language", lang);
+	}
+
 	get default(): Progress {
 		return {
 			date: null,
@@ -94,11 +102,11 @@ export class WordService {
 			return;
 		}
 
-		this.words = await this.http.getWords();
+		this.words = await this.http.getWords(this.language);
 	}
 
 	async loadDaily(): Promise<void> {
-		this.daily = await this.http.getDaily();
+		this.daily = await this.http.getDaily(this.language);
 
 		if (this.daily.solution !== this.progress?.solution) {
 			this.reset();

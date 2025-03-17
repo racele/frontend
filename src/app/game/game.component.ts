@@ -146,6 +146,14 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.update();
 	}
 
+	toggleLanguage(): void {
+		if (this.words.language === "en") {
+			this.words.language = "de";
+		} else {
+			this.words.language = "en";
+		}
+	}
+
 	update(): void {
 		const progress = this.words.progress;
 

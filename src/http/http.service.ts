@@ -42,16 +42,16 @@ export class HttpService {
 		return this.client.post("/users", { password, username });
 	}
 
-	getDaily(): Promise<Daily> {
-		return this.client.get("/words/daily", { language: "en" });
+	getDaily(language: string): Promise<Daily> {
+		return this.client.get("/words/daily", { language: language });
 	}
 
 	getUser(id: number): Promise<User> {
 		return this.client.get(`/users/${id}`, {});
 	}
 
-	getWords(): Promise<Words> {
-		return this.client.get("/words", { language: "en" });
+	getWords(language: string): Promise<Words> {
+		return this.client.get("/words", { language: language });
 	}
 
 	listDaily(): Promise<Score[]> {
