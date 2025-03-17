@@ -146,6 +146,23 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.update();
 	}
 
+	async toggleLanguage(e: MouseEvent): Promise<void> {
+		if (
+			!confirm(
+				"Are you sure you want to change the language?\nThis will reset your progress!\nOnly one Daily will be saved in your scores",
+			)
+		) {
+			return;
+		}
+
+		await this.words.toggleLanguage();
+		this.update();
+
+		if (e.target instanceof HTMLButtonElement) {
+			e.target.blur();
+		}
+	}
+
 	update(): void {
 		const progress = this.words.progress;
 

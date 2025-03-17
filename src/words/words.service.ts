@@ -18,6 +18,10 @@ export class WordService {
 		this.http = http;
 	}
 
+	get language(): string {
+		return localStorage.getItem("language") ?? "en";
+	}
+
 	get default(): Progress {
 		return {
 			date: null,
@@ -94,11 +98,11 @@ export class WordService {
 			return;
 		}
 
-		this.words = await this.http.getWords("en");
+		this.words = await this.http.getWords(this.language);
 	}
 
 	async loadDaily(): Promise<void> {
-		this.daily = await this.http.getDaily("en");
+		this.daily = await this.http.getDaily(this.language);
 
 		if (this.daily.solution !== this.progress?.solution) {
 			this.reset();
@@ -156,6 +160,22 @@ export class WordService {
 		}
 
 		this.setProgress(progress);
+	}
+
+	async toggleLanguage(): Promise<void> {
+		if (this.language === "en") {
+			localStorage.setItem("language", "de");
+		} else {
+			localStorage.setItem("language", "en");
+		}
+		const newProgress = this.default;
+		newProgress.posted = this.progress.posted;
+		this.setProgress(newProgress);
+
+		await this.load();
+		this.words = await this.http.getWords(this.language);
+
+		this.reset();
 	}
 
 	setProgress(progress: Progress): void {
