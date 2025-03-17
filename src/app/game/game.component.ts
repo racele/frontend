@@ -98,8 +98,16 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 		});
 	}
 
-	@HostListener("window:keydown", ["$event.key"])
-	async onkeydown(input: string): Promise<void> {
+	@HostListener("window:keydown", ["$event"])
+	onkeydown(event: KeyboardEvent): void {
+		if (event.target instanceof HTMLInputElement) {
+			return;
+		}
+
+		this.onpress(event.key);
+	}
+
+	async onpress(input: string): Promise<void> {
 		const key = input.toLowerCase();
 
 		if (/^[a-z]$/.test(key)) {

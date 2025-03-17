@@ -27,6 +27,11 @@ kbd {
 	padding: 2px 5px;
 }
 
+span {
+	font-size: x-large;
+	font-weight: bold;
+}
+
 time {
 	background-color: var(--layer);
 	border: 3px solid var(--inverted);

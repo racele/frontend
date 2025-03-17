@@ -5,6 +5,7 @@ import { HomeComponent } from "./home/home.component";
 import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
 import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
+import { UserComponent } from "./user/user.component";
 import { WipComponent } from "./wip/wip.component";
 
 export const routes: Routes = [
@@ -39,6 +40,11 @@ export const routes: Routes = [
 		data: { mode: Mode.Practice },
 		path: "practice",
 		title: "Practice",
+	},
+	{
+		component: UserComponent,
+		path: "users/:id",
+		title: "User Information",
 	},
 	{
 		component: WipComponent,

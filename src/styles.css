@@ -5,20 +5,20 @@
 
 .dark {
 	--border: #444;
-	--main: #222;
 	--inverted: #ddd;
 	--layer: #444;
 	--light: #444;
 	--lighter: #666;
+	--main: #222;
 }
 
 .light {
 	--border: #ddd;
-	--main: #ddd;
 	--inverted: #222;
 	--layer: #bbb;
 	--light: #fff;
 	--lighter: #fff;
+	--main: #ddd;
 }
 
 * {
@@ -29,6 +29,7 @@
 * {
 	box-sizing: border-box;
 	font-family: sans-serif;
+	user-select: none;
 }
 
 body {

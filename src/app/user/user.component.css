@@ -1,0 +1,53 @@
+:host {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	justify-content: center;
+}
+
+.avatar {
+	border-radius: 50%;
+	height: 30%;
+	overflow: hidden;
+}
+
+.box {
+	align-items: center;
+	background-color: var(--layer);
+	border-radius: 50px;
+	display: flex;
+	flex-direction: column;
+	height: 80%;
+	justify-content: space-evenly;
+	width: 60%;
+}
+
+.disabled {
+	cursor: not-allowed;
+}
+
+.question {
+	height: 50%;
+}
+
+.user {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+button {
+	background-color: var(--lighter);
+	padding: 10px;
+	width: 50%;
+}
+
+h2 {
+	font-size: xx-large;
+	font-weight: bold;
+}
+
+span {
+	font-size: larger;
+	margin-top: 10px;
+}

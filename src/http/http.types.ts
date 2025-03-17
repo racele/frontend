@@ -20,6 +20,13 @@ export enum HttpMethod {
 
 export type Query = Record<string, string>;
 
+export interface Request {
+	accepted_at: number | null;
+	created_at: number;
+	recipient_id: number;
+	sender_id: number;
+}
+
 export interface Score {
 	date: string | null;
 	guesses: number;

@@ -9,10 +9,10 @@
 	<app-word></app-word>
 </div>
 
-<app-keyboard (button)="onkeydown($event)"></app-keyboard>
+<app-keyboard (press)="onpress($event)"></app-keyboard>
 
 @if (practice) {
 <button (click)="reset()" [disabled]="initial">Reset (<kbd>Del</kbd>)</button>
 } @else {
-<h2>Current Daily: {{date}}</h2>
+<span>Current Daily: {{date}}</span>
 }

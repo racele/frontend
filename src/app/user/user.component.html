@@ -1,0 +1,15 @@
+<div class="box">
+	@if (user === null) {
+	<h2>User Not Found</h2>
+	<img class="question" src="images/question.gif">
+	} @else {
+	<img class="avatar" src="images/avatar.png">
+
+	<div class="user">
+		<h2>{{user.username}}</h2>
+		<span>Joined Racele: {{formatTimestamp(user.created_at)}}</span>
+	</div>
+
+	<button [class.disabled]="disabled" (click)="sendRequest()">Send Friend Request</button>
+	}
+</div>

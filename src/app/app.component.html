@@ -1,8 +1,24 @@
 <header>
-	<a routerLink="">
-		<img class="icon" src="images/icon.png">
-		<h1>Racele</h1>
-	</a>
+	<div class="left">
+		<a routerLink="">
+			<img class="icon" src="images/icon.png">
+			<h1>Racele</h1>
+		</a>
+	</div>
+
+	<div class="search">
+		<input (input)="searchUsers()" [(ngModel)]="query" placeholder="Search users...">
+
+		@if (searched) {
+		<ul>
+			@for (user of users; track user.id) {
+			<li routerLink="users/{{user.id}}">{{user.username}}</li>
+			} @empty {
+			<span>No users found!</span>
+			}
+		</ul>
+		}
+	</div>
 
 	<nav>
 		@if (http.loggedIn) {

@@ -7,17 +7,13 @@ import { WordService } from "../../../words/words.service";
 	templateUrl: "./keyboard.component.html",
 })
 export class KeyboardComponent {
-	@Output()
-	button = new EventEmitter<string>();
-
-	colors: Record<string, string> = {};
 	words: WordService;
 
-	rows = [
-		["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-		["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-		["Enter", "Z", "X", "C", "V", "B", "N", "M", "\u232b"],
-	];
+	colors: Record<string, string> = {};
+	rows = [[..."QWERTYUIOP"], [..."ASDFGHJKL"], ["Enter", ..."ZXCVBNM\u232b"]];
+
+	@Output()
+	press = new EventEmitter<string>();
 
 	constructor(words: WordService) {
 		this.words = words;
@@ -40,9 +36,9 @@ export class KeyboardComponent {
 
 	onclick(key: string): void {
 		if (key === "\u232b") {
-			this.button.emit("Backspace");
+			this.press.emit("Backspace");
 		} else {
-			this.button.emit(key);
+			this.press.emit(key);
 		}
 	}
 
