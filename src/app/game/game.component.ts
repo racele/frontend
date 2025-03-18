@@ -147,11 +147,17 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 
 	toggleLanguage(): void {
-		if (this.words.language === "en") {
-			this.words.language = "de";
-		} else {
-			this.words.language = "en";
+		if (
+			!confirm(
+				"Are you sure you want to change the language?\nThis will reset your progress!\nOnly one Daily will be saved in your scores",
+			)
+		) {
+			return;
 		}
+
+		this.words.toggleLanguage();
+		this.words.reset();
+		this.update();
 	}
 
 	update(): void {

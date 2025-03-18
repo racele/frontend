@@ -22,10 +22,6 @@ export class WordService {
 		return localStorage.getItem("language") ?? "en";
 	}
 
-	set language(lang: string) {
-		localStorage.setItem("language", lang);
-	}
-
 	get default(): Progress {
 		return {
 			date: null,
@@ -164,6 +160,18 @@ export class WordService {
 		}
 
 		this.setProgress(progress);
+	}
+
+	toggleLanguage(): void {
+		if (this.language === "en") {
+			localStorage.setItem("language", "de");
+		} else {
+			localStorage.setItem("language", "en");
+		}
+		const newProgress = this.default;
+		newProgress.posted = this.progress.posted;
+		this.setProgress(newProgress);
+		this.reset();
 	}
 
 	setProgress(progress: Progress): void {
