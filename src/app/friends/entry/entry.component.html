@@ -1,0 +1,10 @@
+@if (!loaded) {
+<span class="info">Loading...</span>
+} @else if (user === null) {
+<span class="info">Could not load user!</span>
+} @else {
+<div routerLink="/users/{{user.user_id}}">
+	<img src="images/avatar.png">
+	<span class="username">{{user.username}}</span>
+</div>
+}

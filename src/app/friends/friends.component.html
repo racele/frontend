@@ -1,0 +1,24 @@
+<div class="status">
+	<label [class.active]="showAccepted" (change)="setStatus('accepted')">
+		<input name="status" type="radio" checked>
+		Friend List
+	</label>
+
+	<label [class.active]="showReceived" (change)="setStatus('received')">
+		<input name="status" type="radio">
+		Received Requests
+	</label>
+
+	<label [class.active]="showSent" (change)="setStatus('sent')">
+		<input name="status" type="radio">
+		Sent Requests
+	</label>
+</div>
+
+<div class="list">
+	@for (request of this.requests; track request) {
+	<app-entry [request]="request" [status]="status"></app-entry>
+	} @empty {
+	<span>No entries to show!</span>
+	}
+</div>

@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { Mode } from "../words/words.types";
+import { FriendsComponent } from "./friends/friends.component";
 import { GameComponent } from "./game/game.component";
 import { HomeComponent } from "./home/home.component";
 import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
@@ -19,6 +20,11 @@ export const routes: Routes = [
 		data: { mode: Mode.Daily },
 		path: "daily",
 		title: "Daily Racele",
+	},
+	{
+		component: FriendsComponent,
+		path: "friends",
+		title: "Friends",
 	},
 	{
 		component: LeaderboardComponent,
