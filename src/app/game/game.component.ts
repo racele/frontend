@@ -122,7 +122,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 			try {
 				await this.words.postScore();
 			} catch {
-				alert("Could not post score to the leaderboard!");
+				alert("Could not post score to the scoreboard!");
 			}
 
 			if (this.words.progress.state === State.Loss) {

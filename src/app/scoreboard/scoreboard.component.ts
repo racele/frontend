@@ -3,11 +3,11 @@ import { HttpService } from "../../http/http.service";
 import { Score } from "../../http/http.types";
 
 @Component({
-	selector: "app-leaderboard",
-	styleUrl: "./leaderboard.component.css",
-	templateUrl: "./leaderboard.component.html",
+	selector: "app-scoreboard",
+	styleUrl: "./scoreboard.component.css",
+	templateUrl: "./scoreboard.component.html",
 })
-export class LeaderboardComponent implements OnInit {
+export class ScoreboardComponent implements OnInit {
 	http: HttpService;
 
 	daily: Score[] = [];
