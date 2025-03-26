@@ -1,5 +1,6 @@
 export interface Auth {
 	token: string;
+	user_id: number;
 }
 
 export interface Daily {
@@ -8,14 +9,20 @@ export interface Daily {
 	solution: string;
 }
 
+export interface Deleted {
+	deleted: boolean;
+}
+
 export interface HttpError {
-	code: number;
 	message: string;
 }
 
 export enum HttpMethod {
+	Delete = "DELETE",
 	Get = "GET",
+	Patch = "PATCH",
 	Post = "POST",
+	Put = "PUT",
 }
 
 export type Query = Record<string, string>;
@@ -28,15 +35,24 @@ export interface Request {
 }
 
 export interface Score {
+	created_at: number;
 	date: string | null;
 	guesses: number;
 	solution: string;
 	time: number;
+	user_id: number;
+}
+
+export interface Session {
+	created_at: number;
+	last_used_at: number;
+	session_id: number;
+	user_id: number;
 }
 
 export interface User {
 	created_at: number;
-	id: number;
+	user_id: number;
 	username: string;
 }
 

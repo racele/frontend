@@ -22,8 +22,14 @@
 	width: 60%;
 }
 
-.disabled {
-	cursor: not-allowed;
+.buttons {
+	display: flex;
+	gap: 20px;
+	width: 60%;
+}
+
+.buttons:empty {
+	display: none;
 }
 
 .question {
@@ -39,7 +45,7 @@
 button {
 	background-color: var(--lighter);
 	padding: 10px;
-	width: 50%;
+	width: 100%;
 }
 
 h2 {

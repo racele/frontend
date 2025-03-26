@@ -11,8 +11,8 @@
 
 		@if (searched) {
 		<ul>
-			@for (user of users; track user.id) {
-			<li routerLink="users/{{user.id}}">{{user.username}}</li>
+			@for (user of users; track user) {
+			<li routerLink="users/{{user.user_id}}">{{user.username}}</li>
 			} @empty {
 			<span>No users found!</span>
 			}

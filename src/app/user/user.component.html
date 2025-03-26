@@ -1,5 +1,7 @@
 <div class="box">
-	@if (user === null) {
+	@if (!loaded) {
+	<h2>Loading...</h2>
+	} @else if (user === null) {
 	<h2>User Not Found</h2>
 	<img class="question" src="images/question.gif">
 	} @else {
@@ -8,8 +10,23 @@
 	<div class="user">
 		<h2>{{user.username}}</h2>
 		<span>Joined Racele: {{formatTimestamp(user.created_at)}}</span>
+
+		@if (request !== null) {
+		<span>{{requestInfo}}</span>
+		}
 	</div>
 
-	<button [class.disabled]="disabled" (click)="sendRequest()">Send Friend Request</button>
+	<div class="buttons">
+		@if (showRemove) {
+		<button (click)="deleteRequest()">Remove Friend</button>
+		} @else if (showAccept) {
+		<button (click)="acceptRequest()">Accept Request</button>
+		<button (click)="deleteRequest()">Decline Request</button>
+		} @else if (showCancel) {
+		<button (click)="deleteRequest()">Cancel Friend Request</button>
+		} @else if (showSend) {
+		<button (click)="createRequest()">Send Friend Request</button>
+		}
+	</div>
 	}
 </div>

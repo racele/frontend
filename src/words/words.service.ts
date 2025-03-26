@@ -94,11 +94,11 @@ export class WordService {
 			return;
 		}
 
-		this.words = await this.http.getWords();
+		this.words = await this.http.getWords("en");
 	}
 
 	async loadDaily(): Promise<void> {
-		this.daily = await this.http.getDaily();
+		this.daily = await this.http.getDaily("en");
 
 		if (this.daily.solution !== this.progress?.solution) {
 			this.reset();

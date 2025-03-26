@@ -48,8 +48,8 @@ export class LeaderboardComponent implements OnInit {
 
 	async ngOnInit(): Promise<void> {
 		try {
-			this.daily = await this.http.listDaily();
-			this.practice = await this.http.listPractice();
+			this.daily = await this.http.listScores("daily");
+			this.practice = await this.http.listScores("practice");
 		} catch {
 			alert("Could not load scores!");
 		}

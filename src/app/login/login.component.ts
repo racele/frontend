@@ -24,11 +24,9 @@ export class LoginComponent {
 
 	async login(): Promise<void> {
 		try {
-			const response = await this.http.authorizeUser(this.username, this.password);
+			await this.http.authorizeUser(this.password, this.remember, this.username);
 
 			alert("Login successful!");
-
-			this.http.setToken(response.token, this.remember);
 			this.router.navigateByUrl("");
 		} catch (error) {
 			if (error instanceof TypeError) {
@@ -39,7 +37,7 @@ export class LoginComponent {
 
 	async register(): Promise<void> {
 		try {
-			await this.http.createUser(this.username, this.password);
+			await this.http.createUser(this.password, this.username);
 			await this.login();
 		} catch (error) {
 			if (error instanceof TypeError) {

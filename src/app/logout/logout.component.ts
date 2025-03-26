@@ -21,8 +21,13 @@ export class LogoutComponent {
 		this.router.navigateByUrl("");
 	}
 
-	confirm(): void {
-		this.http.removeToken();
+	async confirm(): Promise<void> {
+		try {
+			await this.http.endSession();
+		} catch {
+			alert("Could not log out!");
+			return;
+		}
 
 		alert("Logout successful!");
 		this.router.navigateByUrl("");
