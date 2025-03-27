@@ -8,6 +8,7 @@ import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
 import { UserComponent } from "./user/user.component";
 import { WipComponent } from "./wip/wip.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 export const routes: Routes = [
 	{
@@ -46,6 +47,11 @@ export const routes: Routes = [
 		data: { mode: Mode.Practice },
 		path: "practice",
 		title: "Practice",
+	},
+	{
+		component: ProfileComponent,
+		path: "profile",
+		title: "Your Profile"
 	},
 	{
 		component: UserComponent,

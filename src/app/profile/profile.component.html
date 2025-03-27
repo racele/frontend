@@ -1,0 +1,23 @@
+<div class="box">
+	<div class="inputs">
+		<input [(ngModel)]="username" class="input" placeholder="New Username (optional)">
+		<input [(ngModel)]="password" class="input" placeholder="New Password (optional)" type="password">
+	</div>
+
+	<button (click)="update()">Update User</button>
+</div>
+
+<div class="box2">
+	<h2>Manage Sessions</h2>
+	<div class="list">
+		@for (session of this.sessions; track session) {
+		<div class="session">
+			<span class="date">Created: {{formatTimestamp(session.created_at)}}</span>
+			<span class="date">Last used: {{formatTimestamp(session.last_used_at)}}</span>
+			<button (click)="deleteSession(session.session_id)" class="delete">Delete Session</button>
+		</div>
+		} @empty {
+		<span class="info">No sessions to show!</span>
+		}
+	</div>
+</div>
